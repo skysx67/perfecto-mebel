@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Мебель на заказ в Тюмени от производителя — кухни, шкафы, гардеробные | Перфекто</title>
-<meta name="description" content="Мебель на заказ по вашим размерам в Тюмени: кухни, шкафы-купе, гардеробные от производителя. Бесплатный замер и дизайн-проект, гарантия 2 года, рассрочка. Рейтинг 4.9 на 2ГИС. ☎ +7 904 495-27-00">
+<meta name="description" content="Мебель на заказ по вашим размерам в Тюмени: кухни, шкафы, гардеробные от производителя. Бесплатный замер и дизайн-проект, гарантия 2 года, рассрочка. Рейтинг 4.9 на 2ГИС. ☎ +7 904 495-27-00">
 <meta property="og:title" content="Перфекто — мебель на заказ в Тюмени от производителя">
 <meta property="og:description" content="Кухни, шкафы и гардеробные точно под ваши размеры и бюджет. Бесплатный замер и 3D-проект. Рейтинг 4.9 на 2ГИС.">
 <meta property="og:type" content="website">
@@ -19,7 +19,7 @@
   "@context": "https://schema.org",
   "@type": "FurnitureStore",
   "name": "PERFECTO — студия дизайна мебели",
-  "description": "Производство мебели на заказ в Тюмени: кухни, шкафы-купе, гардеробные, прихожие. Бесплатный замер и дизайн-проект.",
+  "description": "Производство мебели на заказ в Тюмени: кухни, шкафы, гардеробные, прихожие. Бесплатный замер и дизайн-проект.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "ул. Широтная, 209, 2 этаж",
@@ -90,7 +90,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.6rem);margin-bottom:14px}
 .btn-dark:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
 
 /* ---------- логотип ---------- */
-.logo{display:flex;flex-direction:column;gap:2px;line-height:1}
+.logo{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1}
 .logo b{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.55rem;letter-spacing:.01em;color:var(--white)}
 .logo b i{font-style:normal;color:var(--blue)}
 .logo small{display:flex;align-items:center;gap:8px;font-size:.5rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--tx-mut-l)}
@@ -179,6 +179,25 @@ nav a:hover{color:var(--blue)}
 .cat .go i{font-style:normal;transition:transform .25s}
 .cat:hover .go i{transform:translateX(6px)}
 .cat:hover .go{color:#2E97B4}
+
+/* ---------- наши работы ---------- */
+.works{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-top:44px}
+.work{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:var(--ink)}
+.work img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+.work:hover img{transform:scale(1.05)}
+.work-kitchen{grid-column:1;grid-row:1;aspect-ratio:1448/1086}
+.work-wardrobe{grid-column:2;grid-row:1/3}
+.work-tag{position:absolute;left:16px;bottom:16px;background:rgba(30,31,31,.72);backdrop-filter:blur(8px);color:#fff;font-size:.82rem;font-weight:700;padding:9px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.16)}
+.works-cta{grid-column:1;grid-row:2;background:var(--ink);color:#fff;border-radius:var(--r);padding:30px 32px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.works-cta h3{font-size:1.3rem}
+.works-cta p{font-size:.92rem;color:var(--tx-mut-l);margin-bottom:12px}
+.works-cta .btn{align-self:flex-start}
+@media(max-width:760px){
+  .works{grid-template-columns:1fr}
+  .work-kitchen,.work-wardrobe,.works-cta{grid-column:1;grid-row:auto}
+  .work-wardrobe{aspect-ratio:941/1672}
+  .works-cta .btn{width:100%;align-self:stretch}
+}
 
 /* ---------- почему недорого ---------- */
 .dark{background:var(--ink-deep);position:relative}
@@ -349,6 +368,7 @@ footer a:hover{color:var(--blue)}
     </a>
     <nav>
       <a href="#catalog">Каталог</a>
+      <a href="#works">Работы</a>
       <a href="#steps">Как мы работаем</a>
       <a href="#reviews">Отзывы</a>
       <a href="#contacts">Контакты</a>
@@ -364,7 +384,7 @@ footer a:hover{color:var(--blue)}
     <div>
       <div class="kicker">Производство мебели на заказ · Тюмень</div>
       <h1>Мебель на заказ точно под ваши размеры — <span class="accent">и под ваш бюджет</span></h1>
-      <p class="sub">Кухни, шкафы-купе и гардеробные — производство в Тюмени. Приедем, замерим, сделаем 3D-проект и назовём точную цену — всё бесплатно, ещё до договора.</p>
+      <p class="sub">Кухни, шкафы и гардеробные — производство в Тюмени. Приедем, замерим, сделаем 3D-проект и назовём точную цену — всё бесплатно, ещё до договора.</p>
       <div class="hcta">
         <a href="#quiz" class="btn btn-blue">Рассчитать стоимость мебели</a>
         <a href="tel:+79044952700" class="btn btn-ghost">Позвонить</a>
@@ -418,8 +438,8 @@ footer a:hover{color:var(--blue)}
 <!-- ======== БЕГУЩАЯ СТРОКА ======== -->
 <div class="marquee" aria-hidden="true">
   <div class="mtrack">
-    <span>Кухни</span><span>Шкафы-купе</span><span>Гардеробные</span><span>Прихожие</span><span>Детская мебель</span><span>Мебель для ванной</span><span>Офисная мебель</span>
-    <span>Кухни</span><span>Шкафы-купе</span><span>Гардеробные</span><span>Прихожие</span><span>Детская мебель</span><span>Мебель для ванной</span><span>Офисная мебель</span>
+    <span>Кухни</span><span>Шкафы</span><span>Гардеробные</span><span>Прихожие</span><span>Детская мебель</span><span>Мебель для ванной</span><span>Офисная мебель</span>
+    <span>Кухни</span><span>Шкафы</span><span>Гардеробные</span><span>Прихожие</span><span>Детская мебель</span><span>Мебель для ванной</span><span>Офисная мебель</span>
   </div>
 </div>
 
@@ -476,7 +496,7 @@ footer a:hover{color:var(--blue)}
       <div class="cat reveal" data-d="1">
         <div class="cat-vis"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18M9 11v2m6-2v2"/></svg></div>
         <div class="cat-body">
-          <h3>Шкафы-купе</h3>
+          <h3>Шкафы</h3>
           <div class="price">Цена по договору</div>
           <p class="feat">Встроенные и корпусные. Зеркала, лакобель, любое наполнение под ваши вещи. Срок — около месяца.</p>
           <a href="#quiz" class="go">Рассчитать мой шкаф <i>→</i></a>
@@ -522,8 +542,32 @@ footer a:hover{color:var(--blue)}
   </div>
 </section>
 
+<!-- ======== НАШИ РАБОТЫ ======== -->
+<section class="light pad" id="works" style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker">Наши работы</div>
+    <h2>Реальные проекты под реальные квартиры Тюмени</h2>
+    <p class="sub">Это не стоковые картинки: так выглядят наши сданные проекты. Каждый предмет — по индивидуальным размерам под конкретную квартиру.</p>
+    <div class="works">
+      <div class="work work-kitchen reveal">
+        <img src="images/kitchen.png" alt="Кухня на заказ в Тюмени: светлые матовые фасады, рифлёные секции, встроенная техника и скрытая подсветка" loading="lazy" width="1448" height="1086">
+        <span class="work-tag">Кухня на заказ</span>
+      </div>
+      <div class="work work-wardrobe reveal" data-d="1">
+        <img src="images/wardrobe.png" alt="Шкаф на заказ с зеркальными и рифлёными фасадами и чёрными ручками-профилями" loading="lazy" width="941" height="1672">
+        <span class="work-tag">Шкаф на заказ</span>
+      </div>
+      <div class="works-cta reveal">
+        <h3>Хотите так же?</h3>
+        <p>Приедем, снимем размеры и покажем ваш проект в 3D — бесплатно.</p>
+        <a href="#quiz" class="btn btn-blue">Рассчитать свой проект</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ======== ПОЧЕМУ НЕДОРОГО ======== -->
-<section class="dark pad" id="why" style="padding-bottom:0">
+<section class="dark pad" id="why">
   <div class="wrap">
     <div class="kicker">Честно о ценах</div>
     <h2>Индивидуальный подход —<br>к каждому заказу и бюджету</h2>
@@ -744,7 +788,7 @@ footer a:hover{color:var(--blue)}
       </div>
       <div class="rev reveal" data-d="1">
         <div class="stars">★★★★★</div>
-        <p>«Заказывала шкаф-купе в прихожую. По счастливой случайности обратилась именно сюда — сделали быстро и качественно, впечатления самые тёплые».</p>
+        <p>«Заказывала шкаф в прихожую. По счастливой случайности обратилась именно сюда — сделали быстро и качественно, впечатления самые тёплые».</p>
         <div class="who"><div class="ava">Н</div><div><b>Надежда Герман</b><small>отзыв с 2ГИС</small></div></div>
       </div>
       <div class="rev reveal" data-d="2">
@@ -781,7 +825,7 @@ footer a:hover{color:var(--blue)}
       </details>
       <details class="reveal">
         <summary>Как быстро изготовите мою мебель?</summary>
-        <div class="a">Кухни и детская мебель — 25–35 рабочих дней, шкафы-купе, гардеробные и мебель для ванной — около месяца. Точный срок фиксируем в договоре, и он не «поплывёт» в процессе. Судя по отзывам, часто сдаём даже раньше срока.</div>
+        <div class="a">Кухни и детская мебель — 25–35 рабочих дней, шкафы, гардеробные и мебель для ванной — около месяца. Точный срок фиксируем в договоре, и он не «поплывёт» в процессе. Судя по отзывам, часто сдаём даже раньше срока.</div>
       </details>
       <details class="reveal">
         <summary>А если у меня маленький бюджет?</summary>
@@ -853,7 +897,7 @@ footer a:hover{color:var(--blue)}
       <b>Пер<i>фекто</i></b>
       <small>студия мебельных решений</small>
     </a>
-    <p>© 2026 «Перфекто» — студия дизайна мебели, Тюмень<br>Мебель на заказ: кухни, шкафы-купе, гардеробные, прихожие</p>
+    <p>© 2026 «Перфекто» — студия дизайна мебели, Тюмень<br>Мебель на заказ: кухни, шкафы, гардеробные, прихожие</p>
     <a href="#">Политика конфиденциальности</a>
   </div>
 </footer>
