@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>7 ошибок при заказе мебели</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2B2A29; --ink-deep:#1E1F1F; --blue:#73C8DD; --blue-deep:#2E97B4;
+  --light:#F4F7F8; --mut:rgba(43,42,41,.65);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@page{size:A4;margin:0}
+html{color-scheme:light only}
+body{font-family:'Manrope','Segoe UI',sans-serif;color:var(--ink);line-height:1.55;font-size:10.5pt;background:#E9ECEE}
+.page{width:210mm;min-height:296mm;padding:18mm 16mm;page-break-after:always;position:relative;overflow:hidden;background:#fff;margin:0 auto}
+.page:last-child{page-break-after:auto}
+
+/* ---- логотип ---- */
+.logo{display:inline-flex;flex-direction:column;align-items:center;gap:1.5mm;line-height:1}
+.logo b{font-family:'Nunito',sans-serif;font-weight:900;font-size:16pt;color:#fff}
+.logo b i{font-style:normal;color:var(--blue)}
+.logo small{display:flex;align-items:center;gap:2.5mm;font-size:5pt;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:rgba(255,255,255,.65);white-space:nowrap}
+.logo small::before,.logo small::after{content:"";width:8mm;height:.3mm;background:rgba(255,255,255,.35)}
+.logo.dark b{color:var(--ink)}
+.logo.dark small{color:var(--mut)}
+.logo.dark small::before,.logo.dark small::after{background:rgba(43,42,41,.3)}
+
+/* ---- обложка ---- */
+.cover{background:
+  radial-gradient(120mm 90mm at 85% 12%,rgba(115,200,221,.18),transparent 65%),
+  radial-gradient(90mm 70mm at 5% 95%,rgba(115,200,221,.10),transparent 60%),
+  var(--ink-deep);
+  color:#fff;display:flex;flex-direction:column}
+.cover::before{content:"";position:absolute;inset:0;background-image:
+  linear-gradient(rgba(115,200,221,.05) .4mm,transparent .4mm),
+  linear-gradient(90deg,rgba(115,200,221,.05) .4mm,transparent .4mm);
+  background-size:12mm 12mm}
+.cover>*{position:relative}
+.cover .num{font-family:'Nunito',sans-serif;font-weight:900;font-size:110pt;color:var(--blue);line-height:.9;margin-top:22mm}
+.cover h1{font-size:30pt;font-weight:800;line-height:1.15;letter-spacing:-.01em;max-width:150mm;margin-top:4mm}
+.cover h1 span{color:var(--blue)}
+.cover .lead{margin-top:8mm;font-size:12pt;color:rgba(255,255,255,.75);max-width:140mm}
+.cover .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-size:8.5pt;color:rgba(255,255,255,.55)}
+.badge{display:inline-block;background:var(--blue);color:#0D2830;font-weight:800;font-size:9pt;padding:2.5mm 5mm;border-radius:99mm;margin-top:10mm}
+
+/* ---- контентные страницы ---- */
+.phead{display:flex;justify-content:space-between;align-items:center;padding-bottom:5mm;border-bottom:.5mm solid var(--blue);margin-bottom:9mm}
+.phead .tag{font-size:7.5pt;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--blue-deep)}
+.intro{font-size:11.5pt;color:var(--mut);margin-bottom:9mm;max-width:165mm}
+.intro b{color:var(--ink)}
+
+.mistake{display:flex;gap:7mm;margin-bottom:9mm;background:var(--light);border-radius:5mm;padding:8mm;border:.3mm solid rgba(43,42,41,.08)}
+.mistake .n{font-family:'Nunito',sans-serif;font-weight:900;font-size:34pt;line-height:.9;color:var(--blue);flex-shrink:0;width:16mm}
+.mistake h2{font-size:14.5pt;font-weight:800;letter-spacing:-.01em;margin-bottom:3mm}
+.mistake p{color:rgba(43,42,41,.8);margin-bottom:3mm}
+.cost{font-size:9.5pt;font-weight:700;color:#B0483C;margin-bottom:3mm}
+.fix{background:#fff;border-left:1.2mm solid var(--blue);border-radius:2mm;padding:4mm 5mm;font-size:9.8pt}
+.fix b{color:var(--blue-deep)}
+
+/* ---- чек-лист ---- */
+.check{display:flex;align-items:flex-start;gap:4mm;background:var(--light);border-radius:3.5mm;padding:5mm 6mm;margin-bottom:4mm;font-size:10.5pt}
+.check::before{content:"✓";font-weight:900;color:#fff;background:var(--blue-deep);width:6mm;height:6mm;border-radius:2mm;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9pt;margin-top:.5mm}
+
+/* ---- финальный CTA ---- */
+.cta{background:
+  radial-gradient(100mm 70mm at 90% 0%,rgba(115,200,221,.2),transparent 60%),
+  var(--ink-deep);
+  color:#fff;border-radius:6mm;padding:11mm 12mm;margin-top:9mm}
+.cta h2{font-size:17pt;font-weight:800;margin-bottom:3mm}
+.cta h2 span{color:var(--blue)}
+.cta p{color:rgba(255,255,255,.75);margin-bottom:6mm;max-width:150mm}
+.cta .row{display:flex;gap:5mm;flex-wrap:wrap}
+.cta .pill{background:rgba(115,200,221,.12);border:.3mm solid rgba(115,200,221,.4);border-radius:99mm;padding:3mm 6mm;font-size:9.5pt;font-weight:700}
+.cta .phone{background:var(--blue);color:#0D2830;font-weight:800;font-size:12pt;padding:4mm 8mm;border-radius:99mm}
+.pfoot{position:absolute;left:16mm;right:16mm;bottom:9mm;display:flex;justify-content:space-between;font-size:7.5pt;color:rgba(43,42,41,.45)}
+</style>
+</head>
+<body>
+
+<!-- ============ ОБЛОЖКА ============ -->
+<section class="page cover">
+  <div style="display:flex;justify-content:flex-start"><span class="logo"><b>Пер<i>фекто</i></b><small>студия мебельных решений</small></span></div>
+  <div class="num">7</div>
+  <h1>ошибок при заказе мебели, <span>из-за которых люди теряют деньги</span></h1>
+  <p class="lead">Короткий честный гид: на чём действительно нельзя экономить, какие пункты обязаны быть в договоре и как не заплатить дважды за одну и ту же кухню.</p>
+  <span class="badge">Чек-лист перед подписанием договора — внутри</span>
+  <div class="foot">
+    <span>Студия мебельных решений «Перфекто» · Тюмень</span>
+    <span>перфекто-мебель.рф · 2026</span>
+  </div>
+</section>
+
+<!-- ============ ОШИБКИ 1–2 ============ -->
+<section class="page">
+  <div class="phead"><span class="tag">Гид по заказу мебели</span><span class="logo dark"><b>Пер<i>фекто</i></b><small>студия мебельных решений</small></span></div>
+  <p class="intro">Мебель на заказ — это удобно и точно по размерам. Но за 7 лет работы мы сотни раз видели одни и те же ошибки, которые превращают хорошую идею в переплату и нервы. <b>Вот они — все семь.</b> Проверьте себя перед заказом, у кого бы вы его ни делали.</p>
+
+  <div class="mistake">
+    <div class="n">01</div>
+    <div>
+      <h2>Заказывать «по своим замерам»</h2>
+      <p>Вы измерили стену рулеткой, а мебель не встала: стены оказались кривыми, плинтус съел два сантиметра, розетка попала за фасад, труба не дала открыть ящик.</p>
+      <div class="cost">Чем грозит: переделка фасадов или короба — десятки тысяч рублей и месяц ожидания.</div>
+      <div class="fix"><b>Как правильно:</b> замер должен делать специалист производителя — с учётом кривизны стен, коммуникаций и техники. У серьёзных компаний это бесплатно, и ответственность за размеры несут они, а не вы.</div>
+    </div>
+  </div>
+
+  <div class="mistake">
+    <div class="n">02</div>
+    <div>
+      <h2>Вестись на цену «от…» из рекламы</h2>
+      <p>«Кухня от 9 990 ₽ за погонный метр» — а потом выясняется, что в эту цену не входят столешница, фурнитура, доставка и установка. Итог оказывается в два-три раза выше стартовой цифры.</p>
+      <div class="cost">Чем грозит: бюджет «поплыл» уже после предоплаты — отказаться жалко, платить больно.</div>
+      <div class="fix"><b>Как правильно:</b> просите полную стоимость под ключ — со всеми материалами, работой, доставкой и монтажом, — зафиксированную в договоре. Сравнивайте предложения только «под ключ» с «под ключ».</div>
+    </div>
+  </div>
+  <div class="pfoot"><span>7 ошибок при заказе мебели</span><span>2</span></div>
+</section>
+
+<!-- ============ ОШИБКИ 3–4 ============ -->
+<section class="page">
+  <div class="phead"><span class="tag">Гид по заказу мебели</span><span class="logo dark"><b>Пер<i>фекто</i></b><small>студия мебельных решений</small></span></div>
+
+  <div class="mistake">
+    <div class="n">03</div>
+    <div>
+      <h2>Не спрашивать, что внутри</h2>
+      <p>Снаружи два шкафа одинаковые, а внутри — разные миры: дешёвые петли разбалтываются за полгода, тонкая задняя стенка «гуляет», направляющие начинают скрипеть и заедать.</p>
+      <div class="cost">Чем грозит: ремонт фурнитуры каждый год, провисшие дверцы, ящики, которые бесят.</div>
+      <div class="fix"><b>Как правильно:</b> спросите бренды петель и направляющих, класс ЛДСП/МДФ и тип кромки. Производителю, которому нечего скрывать, ответить на это — секундное дело.</div>
+    </div>
+  </div>
+
+  <div class="mistake">
+    <div class="n">04</div>
+    <div>
+      <h2>Работать без договора, «по переписке»</h2>
+      <p>Цена — голосом, срок — «ну недели три», предоплата — 100% на карту физлица. Если что-то пойдёт не так, у вас не будет ни сроков, ни гарантии, ни рычагов.</p>
+      <div class="cost">Чем грозит: срок «плывёт» бесконечно, а претензии предъявлять некому и не по чему.</div>
+      <div class="fix"><b>Как правильно:</b> только договор, в котором зафиксированы полная цена, срок изготовления и гарантия. И никогда не платите 100% вперёд: нормальная схема — например, 70% при заказе и 30% после установки.</div>
+    </div>
+  </div>
+  <div class="pfoot"><span>7 ошибок при заказе мебели</span><span>3</span></div>
+</section>
+
+<!-- ============ ОШИБКИ 5–6 ============ -->
+<section class="page">
+  <div class="phead"><span class="tag">Гид по заказу мебели</span><span class="logo dark"><b>Пер<i>фекто</i></b><small>студия мебельных решений</small></span></div>
+
+  <div class="mistake">
+    <div class="n">05</div>
+    <div>
+      <h2>Пропустить этап 3D-проекта</h2>
+      <p>Без проекта мебель делают «на глаз»: дверца холодильника бьётся о фасад, ящики не открываются одновременно, розетки оказываются за духовкой, а до верхних полок не дотянуться.</p>
+      <div class="cost">Чем грозит: жить с неудобной кухней годами — это ошибка, которую нельзя «докрутить» потом.</div>
+      <div class="fix"><b>Как правильно:</b> утверждайте 3D-проект до запуска производства. Мысленно «проживите» в нём день: готовка, уборка, техника, свет, розетки. Менять на экране — бесплатно, в цехе — дорого.</div>
+    </div>
+  </div>
+
+  <div class="mistake">
+    <div class="n">06</div>
+    <div>
+      <h2>Выбирать цвет по экрану телефона</h2>
+      <p>Экран врёт: «тёплый белый» на фото оказывается серым в жизни, глянец бликует на солнечной кухне, тёмный мат собирает отпечатки пальцев у ручек.</p>
+      <div class="cost">Чем грозит: мебель качественная, но «не та» — и глаз цепляется за это каждый день.</div>
+      <div class="fix"><b>Как правильно:</b> утверждайте цвет и текстуру только по живым образцам материала — и смотрите их при дневном свете в том помещении, где будет стоять мебель.</div>
+    </div>
+  </div>
+  <div class="pfoot"><span>7 ошибок при заказе мебели</span><span>4</span></div>
+</section>
+
+<!-- ============ ОШИБКА 7 + ИТОГ ============ -->
+<section class="page">
+  <div class="phead"><span class="tag">Гид по заказу мебели</span><span class="logo dark"><b>Пер<i>фекто</i></b><small>студия мебельных решений</small></span></div>
+
+  <div class="mistake">
+    <div class="n">07</div>
+    <div>
+      <h2>Стесняться своего бюджета</h2>
+      <p>Половина клиентов не называет бюджет — «а то навяжут дорогое». В итоге проект считают «в среднем», выходит дороже, чем нужно, человек расстраивается и уходит к «гаражному» мастеру без договора и гарантии.</p>
+      <div class="cost">Чем грозит: либо переплата за лишнее, либо лотерея без гарантии — оба варианта хуже честного разговора.</div>
+      <div class="fix"><b>Как правильно:</b> называйте бюджет честно. Хороший производитель не будет «дожимать», а подберёт материалы и наполнение под вашу сумму — и скажет прямо, если за неё что-то сделать нельзя.</div>
+    </div>
+  </div>
+
+  <p class="intro" style="margin-top:8mm"><b>Заметили общее?</b> Все семь ошибок случаются до подписания договора. Значит, все семь можно поймать заранее — за один внимательный вечер. На следующей странице — чек-лист, который сделает это за вас.</p>
+  <div class="pfoot"><span>7 ошибок при заказе мебели</span><span>5</span></div>
+</section>
+
+<!-- ============ ЧЕК-ЛИСТ + CTA ============ -->
+<section class="page">
+  <div class="phead"><span class="tag">Чек-лист перед договором</span><span class="logo dark"><b>Пер<i>фекто</i></b><small>студия мебельных решений</small></span></div>
+
+  <div class="check">Замер делал специалист производителя — не вы «рулеткой по памяти»</div>
+  <div class="check">В договоре зафиксированы: полная цена под ключ, срок изготовления, гарантия</div>
+  <div class="check">Схема оплаты без 100% предоплаты (например, 70% при заказе / 30% после установки)</div>
+  <div class="check">3D-проект утверждён до запуска производства — розетки, техника, открывание дверей проверены</div>
+  <div class="check">Известны бренды фурнитуры и класс материалов (ЛДСП/МДФ, кромка)</div>
+  <div class="check">Цвет и текстура утверждены по живым образцам, а не по фото с экрана</div>
+  <div class="check">Бюджет назван честно — и проект посчитан под него</div>
+  <div class="check">На связи живой человек, который отвечает за ваш заказ, а не безымянный чат</div>
+
+  <div class="cta">
+    <h2>Хотите мебель <span>без этих ошибок</span>?</h2>
+    <p>Приедем и замерим бесплатно, сделаем 3D-проект и назовём точную цену по договору — с гарантией 2 года. Даже если вы пока просто прицениваетесь.</p>
+    <div class="row">
+      <span class="phone">+7 904 495-27-00</span>
+      <span class="pill">Telegram: t.me/+79044952700</span>
+      <span class="pill">Тюмень, ул. Широтная, 209</span>
+      <span class="pill">★ 4.9 на 2ГИС</span>
+    </div>
+  </div>
+  <div class="pfoot"><span>© «Перфекто» — студия мебельных решений, Тюмень, 2026. Ежедневно 10:00–20:00, офис — по записи.</span><span>6</span></div>
+</section>
+
+</body>
+</html>

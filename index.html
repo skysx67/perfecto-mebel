@@ -717,10 +717,11 @@ footer a:hover{color:var(--blue)}
 
       <div class="qstep" data-key="final">
         <h3>Готово! Куда отправить расчёт?</h3>
-        <div class="qgift">🎁 <div>Бонус: PDF-гид <b>«7 ошибок при заказе мебели, из-за которых люди теряют деньги»</b> — пришлём сразу после заявки.</div></div>
+        <div class="qgift">🎁 <div>Бонус: PDF-гид <b>«7 ошибок при заказе мебели, из-за которых люди теряют деньги»</b> — получите сразу после заявки.</div></div>
         <form class="qform" id="quizForm">
           <input class="inp" type="text" name="name" placeholder="Ваше имя" autocomplete="name">
           <input class="inp" type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>
+          <input class="inp" type="email" name="email" placeholder="Email — куда прислать PDF-гид (необязательно)" autocomplete="email">
           <label class="agree"><input type="checkbox" required checked> Соглашаюсь на обработку персональных данных</label>
           <button class="btn btn-blue" type="submit">Получить расчёт + PDF-гид</button>
         </form>
@@ -729,7 +730,8 @@ footer a:hover{color:var(--blue)}
       <div class="qdone" id="qdone">
         <div class="big">✅</div>
         <h3>Заявка принята!</h3>
-        <p>Перезвоним в ближайшее время в рабочие часы (ежедневно 10:00–20:00), уточним детали, подготовим расчёт и пришлём PDF-гид.</p>
+        <p>Перезвоним в ближайшее время в рабочие часы (ежедневно 10:00–20:00), уточним детали и подготовим расчёт. А обещанный гид уже ваш:</p>
+        <a class="btn btn-blue" href="guide/7-oshibok-pri-zakaze-mebeli.pdf" download style="margin-top:20px">📕 Скачать PDF-гид сейчас</a>
       </div>
 
       <button class="qback" id="qback">← Назад</button>
@@ -966,7 +968,7 @@ function sendLead(data){ console.log('LEAD:', data); }
 
 document.getElementById('quizForm').addEventListener('submit', function(e){
   e.preventDefault();
-  answers['Имя'] = this.name.value; answers['Телефон'] = this.phone.value;
+  answers['Имя'] = this.name.value; answers['Телефон'] = this.phone.value; answers['Email'] = this.email.value;
   sendLead(answers);
   steps[cur].classList.remove('on');
   bar.style.width = '100%'; count.textContent = 'Готово';
