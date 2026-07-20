@@ -47,6 +47,17 @@
   ]
 }
 </script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+   ym(110888206, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/110888206" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 <style>
 :root{
   --ink:#2B2A29;          /* точный тёмный цвет логотипа */
@@ -978,19 +989,22 @@ function sendLead(data){
   }catch(e){}
 }
 
+// после отправки заявки уводим на страницу «Спасибо» (это конверсия для Метрики/Директа)
+function goThanks(){
+  try{ sessionStorage.setItem('perfecto_lead','1'); }catch(e){}
+  location.href = 'spasibo.html';
+}
+
 document.getElementById('quizForm').addEventListener('submit', function(e){
   e.preventDefault();
   answers['Имя'] = this.name.value; answers['Телефон'] = this.phone.value; answers['Email'] = this.email.value; answers['Источник'] = 'квиз';
   sendLead(answers);
-  steps[cur].classList.remove('on');
-  bar.style.width = '100%'; count.textContent = 'Готово';
-  document.getElementById('qdone').style.display = 'block';
-  back.style.display = 'none';
+  goThanks();
 });
 document.getElementById('leadForm').addEventListener('submit', function(e){
   e.preventDefault();
   sendLead({'Имя': this.name.value, 'Телефон': this.phone.value, 'Источник': 'форма контактов'});
-  this.innerHTML = '<h3>✅ Заявка принята!</h3><p style="color:var(--tx-mut-l)">Перезвоним в ближайшее время в рабочие часы (10:00–20:00).</p>';
+  goThanks();
 });
 </script>
 </body>
