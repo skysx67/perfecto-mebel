@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Nunito:wght@800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+.card{width:1200px;height:630px;position:relative;
+  background:radial-gradient(120% 140% at 82% 18%,#34506b 0%,#242c34 42%,#1E1F1F 100%);
+  font-family:'Manrope',sans-serif;color:#fff;padding:70px 74px;display:flex;flex-direction:column;justify-content:space-between}
+.card::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(115,200,221,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(115,200,221,.07) 1px,transparent 1px);
+  background-size:40px 40px}
+.card>*{position:relative;z-index:1}
+.brand{display:flex;flex-direction:column}
+.brand b{font-family:'Nunito',sans-serif;font-weight:900;font-size:40px;letter-spacing:.5px}
+.brand b i{color:#73C8DD;font-style:normal}
+.brand small{font-size:15px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px}
+.kicker{display:flex;align-items:center;gap:14px;color:#73C8DD;font-weight:700;font-size:19px;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px}
+.kicker::before{content:"";width:46px;height:3px;background:#73C8DD;border-radius:2px}
+h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:64px;line-height:1.05;max-width:900px}
+h1 span{color:#73C8DD}
+.sub{font-size:26px;color:rgba(255,255,255,.82);margin-top:20px}
+.chips{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+.chip{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:12px 22px;font-size:20px;font-weight:600}
+.chip b{color:#73C8DD}
+.foot{display:flex;align-items:center;justify-content:space-between}
+.phone{font-family:'Nunito',sans-serif;font-weight:900;font-size:34px}
+.city{font-size:22px;color:rgba(255,255,255,.6)}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="top">
+      <div class="brand"><b>Пер<i>фекто</i></b><small>студия мебельных решений</small></div>
+    </div>
+    <div class="mid">
+      <div class="kicker">Мебель на заказ · Тюмень</div>
+      <h1>Кухни, шкафы и&nbsp;гардеробные <span>под ваши размеры</span></h1>
+      <div class="sub">От производителя. Бесплатный замер и 3D-проект — ещё до договора.</div>
+    </div>
+    <div class="chips">
+      <div class="chip"><b>★ 4.9</b> на 2ГИС</div>
+      <div class="chip">Замер и проект — <b>0 ₽</b></div>
+      <div class="chip">Гарантия <b>2 года</b></div>
+    </div>
+    <div class="foot">
+      <div class="phone">+7 904 495-27-00</div>
+      <div class="city">г. Тюмень, с 2019 года</div>
+    </div>
+  </div>
+</body>
+</html>
