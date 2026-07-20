@@ -961,15 +961,21 @@ document.querySelectorAll('.qopt').forEach(function(btn){
 });
 back.addEventListener('click', function(){ if(cur > 0) showStep(cur - 1); });
 
-// отправка форм.
-// ponytail: бэкенда нет — заявка сейчас только показывает "принято".
-// Подключить отправку: замените sendLead() на fetch к вашему бэкенду
-// или к Telegram Bot API (https://api.telegram.org/bot<TOKEN>/sendMessage).
-function sendLead(data){ console.log('LEAD:', data); }
+// Куда отправлять заявки. Заполнить после деплоя бэкенда (папка backend/).
+// Пока пусто — сайт работает как раньше, просто без отправки в MAX.
+var LEAD_ENDPOINT = ''; // напр. 'https://ваш-сервер.ru/lead'
+function sendLead(data){
+  console.log('LEAD:', data);
+  if(!LEAD_ENDPOINT) return;
+  // fire-and-forget: UX не зависит от ответа сервера
+  try{
+    fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),keepalive:true}).catch(function(){});
+  }catch(e){}
+}
 
 document.getElementById('quizForm').addEventListener('submit', function(e){
   e.preventDefault();
-  answers['Имя'] = this.name.value; answers['Телефон'] = this.phone.value; answers['Email'] = this.email.value;
+  answers['Имя'] = this.name.value; answers['Телефон'] = this.phone.value; answers['Email'] = this.email.value; answers['Источник'] = 'квиз';
   sendLead(answers);
   steps[cur].classList.remove('on');
   bar.style.width = '100%'; count.textContent = 'Готово';
