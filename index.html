@@ -13,7 +13,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232B2A29'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%2373C8DD' text-anchor='middle'%3EП%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap"></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -903,14 +905,16 @@ footer a:hover{color:var(--blue)}
 <script>
 // шапка при скролле + sticky-бар
 var hdr = document.getElementById('hdr'), sticky = document.getElementById('sticky');
+// видимость квиза считаем через IntersectionObserver, чтобы НЕ дёргать
+// getBoundingClientRect на каждом скролле (это вызывало forced reflow)
+var quizVisible = false;
+function updateSticky(){ sticky.classList.toggle('show', scrollY > 500 && !quizVisible); }
+new IntersectionObserver(function(es){ quizVisible = es[0].isIntersecting; updateSticky(); }, {threshold:0})
+  .observe(document.getElementById('quiz'));
 addEventListener('scroll', function(){
   hdr.classList.toggle('scrolled', scrollY > 30);
-  sticky.classList.toggle('show', scrollY > 500 && !inQuizView());
+  updateSticky();
 }, {passive:true});
-function inQuizView(){
-  var r = document.getElementById('quiz').getBoundingClientRect();
-  return r.top < innerHeight && r.bottom > 0;
-}
 
 // появление секций
 var io = new IntersectionObserver(function(es){
