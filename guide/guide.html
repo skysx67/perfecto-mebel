@@ -17,15 +17,12 @@
 @page{size:A4;margin:0}
 html{color-scheme:dark only}
 body{font-family:'Manrope','Segoe UI',sans-serif;color:#fff;line-height:1.55;font-size:10.5pt;background:#141515}
+/* Фон страницы — ОДИН непрозрачный градиент.
+   Раньше поверх фона лежала полупрозрачная сетка (::before) — из-за неё
+   PDF растрировал каждую страницу в картинку целиком: отсюда были
+   светлые швы-полосы, лишний вес файла и рывки при скролле. */
 .page{width:210mm;min-height:296mm;padding:16mm;page-break-after:always;position:relative;overflow:hidden;margin:0 auto;
-  background:
-    radial-gradient(150mm 110mm at 85% 8%,rgba(115,200,221,.13),transparent 60%),
-    radial-gradient(110mm 90mm at 5% 100%,rgba(115,200,221,.07),transparent 60%),
-    var(--ink-deep)}
-.page::before{content:"";position:absolute;inset:0;background-image:
-  linear-gradient(rgba(115,200,221,.05) .4mm,transparent .4mm),
-  linear-gradient(90deg,rgba(115,200,221,.05) .4mm,transparent .4mm);
-  background-size:11mm 11mm;pointer-events:none}
+  background:radial-gradient(165mm 125mm at 85% 6%,#28353d 0%,var(--ink-deep) 62%)}
 .page>*{position:relative}
 .page:last-child{page-break-after:auto}
 
@@ -43,11 +40,13 @@ body{font-family:'Manrope','Segoe UI',sans-serif;color:#fff;line-height:1.55;fon
 
 /* ---- обложка ---- */
 .cover{display:flex;flex-direction:column}
-.cover .num{font-family:'Nunito',sans-serif;font-weight:900;font-size:105pt;color:var(--blue);line-height:.9;margin-top:14mm}
+/* margin-top:auto вместе с auto у .foot центрирует блок обложки по вертикали
+   — раньше контент прижимался вверх и внизу зияла пустота */
+.cover .num{font-family:'Nunito',sans-serif;font-weight:900;font-size:105pt;color:var(--blue);line-height:.9;margin-top:auto}
 .cover h1{font-size:29pt;font-weight:800;line-height:1.15;letter-spacing:-.01em;max-width:155mm;margin-top:4mm}
 .cover h1 span{color:var(--blue)}
 .cover .lead{margin-top:7mm;font-size:11.5pt;color:var(--mut);max-width:140mm}
-.badge{display:inline-block;background:var(--blue);color:#0D2830;font-weight:800;font-size:9.5pt;padding:3.5mm 6mm;border-radius:4mm;margin-top:10mm;box-shadow:0 4mm 12mm rgba(115,200,221,.35)}
+.badge{display:inline-block;background:var(--blue);color:#0D2830;font-weight:800;font-size:9.5pt;padding:3.5mm 6mm;border-radius:4mm;margin-top:10mm}
 .chips{display:flex;gap:3mm;flex-wrap:wrap;margin-top:9mm}
 .cover .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-size:8pt;color:rgba(255,255,255,.45)}
 
@@ -69,7 +68,7 @@ body{font-family:'Manrope','Segoe UI',sans-serif;color:#fff;line-height:1.55;fon
 .check::before{content:"✓";font-weight:900;color:#0D2830;background:var(--blue);width:6mm;height:6mm;border-radius:2mm;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9pt;margin-top:.4mm}
 
 /* ---- финальный CTA: баннер как на сайте ---- */
-.cta{background:linear-gradient(120deg,var(--blue) 0%,#9BDCEB 100%);color:#0D2830;border-radius:7mm;padding:10mm 12mm;margin-top:6mm;position:relative;overflow:hidden;box-shadow:0 6mm 18mm rgba(115,200,221,.3)}
+.cta{background:linear-gradient(120deg,var(--blue) 0%,#9BDCEB 100%);color:#0D2830;border-radius:7mm;padding:10mm 12mm;margin-top:6mm;position:relative;overflow:hidden}
 .cta::before{content:"";position:absolute;right:-18mm;top:-18mm;width:60mm;height:60mm;border:.6mm dashed rgba(13,40,48,.25);border-radius:50%}
 .cta>*{position:relative}
 .cta h2{font-size:17pt;font-weight:800;margin-bottom:3mm}
@@ -218,7 +217,7 @@ body{font-family:'Manrope','Segoe UI',sans-serif;color:#fff;line-height:1.55;fon
     <p>Приедем и замерим бесплатно, сделаем 3D-проект и назовём точную цену по договору — с гарантией 2 года. Даже если вы пока просто прицениваетесь.</p>
     <div class="row">
       <span class="phone">+7 904 495-27-00</span>
-      <span class="pill">Telegram: t.me/+79044952700</span>
+      <span class="pill">MAX: max.ru/id723001526202_biz</span>
       <span class="pill">Тюмень, ул. Широтная, 209</span>
       <span class="pill">★ 4.9 на 2ГИС</span>
     </div>
