@@ -229,6 +229,12 @@ nav a:hover{color:var(--blue)}
 .cat--wide .cat-photo,.cat--tall .cat-photo{aspect-ratio:auto;flex:1}
 .cat--wide .cat-photo{min-height:300px}
 .cat--tall .cat-photo{min-height:420px}
+/* В широких/высоких карточках лишнюю высоту забирает ФОТО, а не тело.
+   Иначе тело (flex:1) растягивалось, а .go с margin-top:auto улетала
+   вниз — между описанием и кнопкой зияла пустота в ~370px. */
+@media(min-width:641px){
+  .cat--wide .cat-body,.cat--tall .cat-body{flex:none}
+}
 .cat-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
 .cat:hover .cat-photo img{transform:scale(1.06)}
 .cat-tag{position:absolute;left:14px;bottom:14px;background:rgba(30,31,31,.72);backdrop-filter:blur(8px);color:#fff;font-size:.78rem;font-weight:700;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.16);z-index:1}
