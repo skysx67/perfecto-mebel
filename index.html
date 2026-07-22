@@ -204,7 +204,7 @@ nav a:hover{color:var(--blue)}
 .cats{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-flow:dense;gap:20px;margin-top:44px}
 .cat{background:var(--white);border:1px solid var(--line-d);border-radius:var(--r);overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s;display:flex;flex-direction:column}
 .cat:hover{transform:translateY(-8px);box-shadow:var(--shadow);border-color:var(--blue)}
-.cat-vis{aspect-ratio:4/3;background:
+.cat-vis{aspect-ratio:1/1;background:
   radial-gradient(340px 160px at 80% -20%,rgba(115,200,221,.3),transparent),
   linear-gradient(135deg,var(--ink) 0%,#3A3938 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;position:relative;overflow:hidden}
 .cat-vis small{position:relative;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
@@ -223,7 +223,9 @@ nav a:hover{color:var(--blue)}
 /* ---------- фото-карточки каталога ---------- */
 .cat--wide{grid-column:span 2}
 .cat--tall{grid-row:span 2}
-.cat-photo{position:relative;overflow:hidden;background:var(--ink);aspect-ratio:4/3}
+/* квадрат: у нас вертикальные фото интерьеров, в 4/3 у них срезало
+   верх и низ (мебель во всю высоту не помещалась) */
+.cat-photo{position:relative;overflow:hidden;background:var(--ink);aspect-ratio:1/1}
 .cat--wide .cat-photo,.cat--tall .cat-photo{aspect-ratio:auto;flex:1}
 .cat--wide .cat-photo{min-height:300px}
 .cat--tall .cat-photo{min-height:420px}
@@ -549,7 +551,10 @@ footer a:hover{color:var(--blue)}
         </div>
       </div>
       <div class="cat reveal" data-d="2">
-        <div class="cat-vis"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><path d="M3 21V7l9-4 9 4v14M7 21v-8h4v8m4-10v3m0 4v3"/></svg><small>Фото проекта — скоро</small></div>
+        <div class="cat-photo">
+          <img src="images/dressing-room.jpg" alt="Гардеробная комната на заказ в Тюмени: светлые фасады, зеркало с подсветкой, открытые полки, штанги и рифлёные ящики" loading="lazy" width="844" height="1500">
+          <span class="cat-tag">Наша работа · Тюмень</span>
+        </div>
         <div class="cat-body">
           <h3>Гардеробные</h3>
           <div class="price">Цена по договору</div>
@@ -558,7 +563,10 @@ footer a:hover{color:var(--blue)}
         </div>
       </div>
       <div class="cat reveal">
-        <div class="cat-vis"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><path d="M4 21V4a1 1 0 0 1 1-1h6v18M11 8h9v13M14 12h3m-3 4h3M7 8v2"/></svg><small>Фото проекта — скоро</small></div>
+        <div class="cat-photo">
+          <img src="images/hallway.jpg" alt="Прихожая на заказ в Тюмени: встроенный шкаф с фисташковыми фасадами, рифлёные секции, скрытая подсветка и место для хранения" loading="lazy" width="1086" height="1448">
+          <span class="cat-tag">Наша работа · Тюмень</span>
+        </div>
         <div class="cat-body">
           <h3>Прихожие</h3>
           <div class="price">Цена по договору</div>
@@ -567,7 +575,10 @@ footer a:hover{color:var(--blue)}
         </div>
       </div>
       <div class="cat reveal" data-d="1">
-        <div class="cat-vis"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M3 18v2m18-2v2M6 10V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/></svg><small>Фото проекта — скоро</small></div>
+        <div class="cat-photo">
+          <img src="images/kids-room.jpg" alt="Мебель для детской и подростковой комнаты на заказ в Тюмени: письменный стол, стеллаж с витринами и реечная перегородка" loading="lazy" width="1086" height="1448">
+          <span class="cat-tag">Наша работа · Тюмень</span>
+        </div>
         <div class="cat-body">
           <h3>Детская мебель</h3>
           <div class="price">Цена по договору</div>
