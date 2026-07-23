@@ -1,0 +1,15 @@
+{
+  "name": "perfecto-lead-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Перфекто — приём заявок с лендинга: SQLite + уведомление менеджеру в мессенджер MAX",
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "capture-id": "node --env-file=.env capture-id.js",
+    "leads": "node --env-file=.env export-leads.js"
+  }
+}

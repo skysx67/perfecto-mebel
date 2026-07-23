@@ -1,4 +1,8 @@
 .env
 leads.jsonl
+leads.db
+leads.db-journal
+leads.db-wal
+leads.db-shm
 node_modules/
 *.pem
