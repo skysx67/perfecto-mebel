@@ -1029,7 +1029,9 @@ back.addEventListener('click', function(){ if(cur > 0) showStep(cur - 1); });
 
 // Куда отправлять заявки. Заполнить после деплоя бэкенда (папка backend/).
 // Пока пусто — сайт работает как раньше, просто без отправки в MAX.
-var LEAD_ENDPOINT = ''; // напр. 'https://ваш-сервер.ru/lead'
+var LEAD_ENDPOINT = ''; // ПРОДАКШН: сюда URL бэкенда, напр. 'https://ваш-сервер.ru/lead'
+// локальная проверка: при открытии сайта с localhost заявки сами идут на локальный бэкенд
+if(location.hostname==='localhost'||location.hostname==='127.0.0.1') LEAD_ENDPOINT='http://localhost:8787/lead';
 function sendLead(data){
   console.log('LEAD:', data);
   if(!LEAD_ENDPOINT) return;
