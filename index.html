@@ -960,10 +960,18 @@ footer a:hover{color:var(--blue)}
 var hdr = document.getElementById('hdr'), sticky = document.getElementById('sticky');
 // видимость квиза считаем через IntersectionObserver, чтобы НЕ дёргать
 // getBoundingClientRect на каждом скролле (это вызывало forced reflow)
-var quizVisible = false;
-function updateSticky(){ sticky.classList.toggle('show', scrollY > 500 && !quizVisible); }
-new IntersectionObserver(function(es){ quizVisible = es[0].isIntersecting; updateSticky(); }, {threshold:0})
-  .observe(document.getElementById('quiz'));
+var quizVisible = false, footerVisible = false;
+// прячем sticky-бар, когда виден квиз ИЛИ футер — иначе бар перекрывал ссылку
+// «Политика конфиденциальности» внизу, и её нельзя было нажать
+function updateSticky(){ sticky.classList.toggle('show', scrollY > 500 && !quizVisible && !footerVisible); }
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.target.id === 'quiz') quizVisible = e.isIntersecting; else footerVisible = e.isIntersecting;
+  });
+  updateSticky();
+}, {threshold:0});
+io.observe(document.getElementById('quiz'));
+io.observe(document.querySelector('footer'));
 addEventListener('scroll', function(){
   hdr.classList.toggle('scrolled', scrollY > 30);
   updateSticky();
