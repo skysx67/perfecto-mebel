@@ -3,3 +3,8 @@ node_modules/
 Thumbs.db
 *.log
 .env
+
+# установленные локально agent-skills (не часть сайта)
+.agents/
+.claude/skills/
+skills-lock.json
