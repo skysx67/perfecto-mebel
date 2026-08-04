@@ -72,14 +72,19 @@
   ]
 }
 </script>
-<!-- Yandex.Metrika counter -->
+<!-- Yandex.Metrika counter — не загружается, если посетитель отказался от cookie -->
 <script type="text/javascript">
+(function(){
+   var declined = false;
+   try { declined = localStorage.getItem('perfecto_cookie') === 'no'; } catch(e){}
+   if (declined) return;
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
    m[i].l=1*new Date();
    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
    ym(110888206, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+})();
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/110888206" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
@@ -366,6 +371,26 @@ footer a:hover{color:var(--blue)}
 .stickybar.show{transform:none}
 .stickybar .btn{flex:1;padding:15px 10px;font-size:.95rem}
 .stickybar .call{flex:0 0 54px;background:var(--ink-card);border:1.5px solid var(--blue-line);color:var(--blue);font-size:1.25rem;border-radius:14px;display:grid;place-items:center}
+
+/* ---------- cookie-баннер ---------- */
+.ckbar{position:fixed;left:12px;right:12px;bottom:12px;max-width:1060px;margin:0 auto;z-index:200;
+  background:var(--ink-card);border:1px solid var(--blue-line);border-radius:16px;padding:16px 20px;
+  display:none;gap:16px;align-items:center;flex-wrap:wrap;box-shadow:0 16px 46px rgba(0,0,0,.42)}
+.ckbar.show{display:flex}
+.ckbar p{margin:0;flex:1 1 340px;font-size:.85rem;line-height:1.55;color:var(--tx-mut-l)}
+.ckbar a{color:var(--blue)}
+.ckbtns{display:flex;gap:9px;flex-shrink:0}
+.ckbar button{font:inherit;font-size:.85rem;font-weight:700;padding:11px 20px;border-radius:12px;cursor:pointer;border:1.5px solid transparent;transition:opacity .2s}
+.ckbar button:hover{opacity:.85}
+.ckbar .ok{background:var(--blue);color:var(--ink)}
+.ckbar .no{background:transparent;border-color:var(--blue-line);color:var(--tx-mut-l)}
+/* пока виден баннер — прячем sticky-бар, чтобы не перекрывали друг друга */
+body.ck-open .stickybar.show{transform:translateY(200%)}
+@media(max-width:640px){
+  .ckbar{padding:14px 16px;gap:12px}
+  .ckbtns{width:100%}
+  .ckbar button{flex:1;padding:12px 10px}
+}
 
 /* ---------- reveal ---------- */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
@@ -960,6 +985,15 @@ footer a:hover{color:var(--blue)}
   <a class="btn btn-blue" href="#quiz">Бесплатный замер</a>
 </div>
 
+<!-- ======== COOKIE-БАННЕР ======== -->
+<div class="ckbar" id="ckbar" role="dialog" aria-label="Использование файлов cookie">
+  <p>Мы используем файлы cookie и сервис «Яндекс.Метрика» — чтобы сайт работал удобнее, а мы видели, что можно улучшить. Подробнее — в <a href="politika.html" target="_blank" rel="noopener">Политике обработки персональных данных</a>.</p>
+  <div class="ckbtns">
+    <button class="no" id="ckNo" type="button">Отклонить</button>
+    <button class="ok" id="ckOk" type="button">Принять</button>
+  </div>
+</div>
+
 <script>
 // шапка при скролле + sticky-бар
 var hdr = document.getElementById('hdr'), sticky = document.getElementById('sticky');
@@ -1063,6 +1097,24 @@ document.getElementById('leadForm').addEventListener('submit', function(e){
   sendLead({'Имя': this.name.value, 'Телефон': this.phone.value, 'Источник': 'форма контактов'});
   goThanks();
 });
+
+// cookie-баннер: показываем один раз, пока посетитель не сделал выбор.
+// «Отклонить» → перезагружаем страницу, и Метрика больше не подключается (см. <head>).
+(function(){
+  var bar = document.getElementById('ckbar'), choice = null;
+  try { choice = localStorage.getItem('perfecto_cookie'); } catch(e){}
+  if(choice) return;
+  bar.classList.add('show');
+  document.body.classList.add('ck-open');
+  function decide(val){
+    try{ localStorage.setItem('perfecto_cookie', val); }catch(e){}
+    bar.classList.remove('show');
+    document.body.classList.remove('ck-open');
+    if(val === 'no') location.reload();
+  }
+  document.getElementById('ckOk').addEventListener('click', function(){ decide('yes'); });
+  document.getElementById('ckNo').addEventListener('click', function(){ decide('no'); });
+})();
 </script>
 </body>
 </html>

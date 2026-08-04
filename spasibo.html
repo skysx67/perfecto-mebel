@@ -9,14 +9,19 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap"></noscript>
-<!-- Yandex.Metrika counter -->
+<!-- Yandex.Metrika counter — не загружается, если посетитель отказался от cookie -->
 <script type="text/javascript">
+(function(){
+   var declined = false;
+   try { declined = localStorage.getItem('perfecto_cookie') === 'no'; } catch(e){}
+   if (declined) return;
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
    m[i].l=1*new Date();
    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
    ym(110888206, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+})();
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/110888206" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
