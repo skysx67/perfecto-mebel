@@ -10,8 +10,9 @@
 //   NODE_EXTRA_CA_CERTS — путь к сертификатам Минцифры (нужно на боевом сервере)
 
 const http = require('http');
-const { saveLead, markNotified, listLeads } = require('./db');
+const { saveLead, markNotified, listLeads, pendingLeads, markEmailed, bumpAttempt } = require('./db');
 const max = require('./max');
+const mailer = require('./mailer');
 
 const PORT = process.env.PORT || 8787;
 const ORIGIN = process.env.ALLOWED_ORIGIN || '*';
@@ -34,9 +35,11 @@ function whenStr() {
   }).format(new Date());
 }
 
-function formatLead(d) {
+function formatLead(d, opts = {}) {
   const L = [];
-  L.push('🔔 Новая заявка с сайта «Перфекто»');
+  L.push(opts.delayed
+    ? '🔔 Заявка с сайта «Перфекто» (доставлена с задержкой)'
+    : '🔔 Новая заявка с сайта «Перфекто»');
   L.push('Источник: ' + (d['Источник'] || '—') + ' · ' + whenStr() + ' (Тюмень)');
   L.push('');
   L.push('👤 Имя: ' + (d['Имя'] || '—'));
@@ -56,6 +59,67 @@ function formatLead(d) {
   L.push('');
   L.push('☎️ Перезвоните клиенту в рабочее время (ежедневно 10:00–20:00).');
   return L.join('\n');
+}
+
+// ── доставка уведомления менеджеру ───────────────────────────────────────────
+// Сначала MAX. Если бот/сеть недоступны — дублируем заявку на резервную почту,
+// а сама заявка остаётся в очереди и будет повторяться автоматически.
+// Возвращает true, если уведомление ушло именно в MAX.
+async function deliver(id, data, opts = {}) {
+  const text = formatLead(data, opts);
+
+  if (MANAGER) {
+    try {
+      await max.sendToUser(MANAGER, text);
+      if (id) markNotified(id);
+      if (opts.delayed) console.log('Заявка #' + id + ' доставлена в MAX с задержкой');
+      return true;
+    } catch (e) {
+      if (id) bumpAttempt(id, e.message);
+      console.error('MAX недоступен (заявка #' + id + '): ' + e.message);
+    }
+  } else {
+    if (id) bumpAttempt(id, 'MANAGER_USER_ID не задан');
+    console.warn('MANAGER_USER_ID не задан — заявка сохранена, но в MAX не отправлена');
+  }
+
+  // резерв: письмо (шлём один раз на заявку, чтобы не спамить)
+  if (!opts.alreadyEmailed && mailer.isEnabled()) {
+    try {
+      await mailer.sendMail('Новая заявка с сайта «Перфекто»',
+        text + '\n\n— — —\nЭто резервное письмо: уведомление в MAX не доставлено.\n' +
+        'Заявка сохранена и уйдёт в MAX автоматически, как только бот заработает.');
+      if (id) markEmailed(id);
+      console.log('Заявка #' + id + ' продублирована на резервную почту');
+    } catch (e) {
+      console.error('Резервная почта не сработала (заявка #' + id + '): ' + e.message);
+    }
+  }
+  return false;
+}
+
+// ── автоповтор недоставленных заявок ─────────────────────────────────────────
+// Раз в RETRY_MS проверяем очередь: как только MAX оживёт, всё накопленное уйдёт туда.
+const RETRY_MS = Number(process.env.RETRY_MS || 120000); // по умолчанию 2 минуты
+let retrying = false;
+
+async function retryPending() {
+  if (retrying || !MANAGER) return;
+  retrying = true;
+  try {
+    const rows = pendingLeads({ maxAgeHours: 24, limit: 20 });
+    if (rows.length) console.log('Очередь недоставленных: ' + rows.length + ' — пробую отправить');
+    for (const row of rows) {
+      let data;
+      try { data = JSON.parse(row.raw || '{}'); } catch (e) { continue; }
+      const ok = await deliver(row.id, data, { delayed: true, alreadyEmailed: row.emailed === 1 });
+      if (!ok) break; // MAX всё ещё недоступен — ждём следующего круга
+    }
+  } catch (e) {
+    console.error('Ошибка обработки очереди: ' + e.message);
+  } finally {
+    retrying = false;
+  }
 }
 
 // ── простой анти-флуд: не чаще 1 заявки в 2 сек с одного IP ───────────────────
@@ -106,14 +170,9 @@ const server = http.createServer((req, res) => {
     try { id = saveLead(data, { ip, ua }); }
     catch (e) { console.error('SQLite save failed:', e.message); }
 
-    // 2) уведомление менеджеру в MAX — асинхронно, ответ клиенту не ждёт MAX
-    if (MANAGER) {
-      max.sendToUser(MANAGER, formatLead(data))
-        .then(() => { if (id) markNotified(id); })
-        .catch(e => console.error('MAX send failed:', e.message));
-    } else {
-      console.warn('MANAGER_USER_ID не задан — заявка сохранена, но в MAX не отправлена. Запусти: npm run capture-id');
-    }
+    // 2) уведомление менеджеру: MAX, при сбое — резервная почта.
+    //    Асинхронно: ответ клиенту не ждёт ни MAX, ни почту.
+    deliver(id, data).catch(e => console.error('Ошибка доставки: ' + e.message));
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end('{"ok":true}');
@@ -127,5 +186,10 @@ const HOST = process.env.HOST || '127.0.0.1';
 server.listen(PORT, HOST, () => {
   console.log('Perfecto lead backend слушает ' + HOST + ':' + PORT);
   console.log('MAX_TOKEN: ' + (process.env.MAX_TOKEN ? 'задан' : 'НЕ задан') +
-    ' · MANAGER_USER_ID: ' + (MANAGER || 'НЕ задан'));
+    ' · MANAGER_USER_ID: ' + (MANAGER || 'НЕ задан') +
+    ' · резервная почта: ' + (mailer.isEnabled() ? 'вкл (' + mailer.cfg().to + ')' : 'выкл'));
+
+  // очередь: первый прогон через 10 секунд, дальше — раз в RETRY_MS
+  setTimeout(retryPending, 10000);
+  setInterval(retryPending, RETRY_MS).unref?.();
 });

@@ -29,6 +29,18 @@ db.exec(`
   );
 `);
 
+// Миграция: добавляем недостающие колонки, если база создана более старой версией.
+// (SQLite не умеет ADD COLUMN IF NOT EXISTS, поэтому проверяем сами.)
+const existing = new Set(db.prepare('PRAGMA table_info(leads)').all().map(c => c.name));
+const EXTRA_COLS = {
+  emailed:    'INTEGER DEFAULT 0',  // 1, если заявка ушла на резервную почту
+  attempts:   'INTEGER DEFAULT 0',  // сколько раз пробовали отправить в MAX
+  last_error: 'TEXT'                // текст последней ошибки доставки
+};
+for (const [col, type] of Object.entries(EXTRA_COLS)) {
+  if (!existing.has(col)) db.exec(`ALTER TABLE leads ADD COLUMN ${col} ${type}`);
+}
+
 const insertStmt = db.prepare(`
   INSERT INTO leads (ts, name, phone, email, source, furniture, measure, design, terms, raw, ip, ua, notified)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
@@ -61,4 +73,29 @@ function markNotified(id) { markStmt.run(id); }
 const listStmt = db.prepare('SELECT * FROM leads ORDER BY id DESC LIMIT ?');
 function listLeads(limit = 200) { return listStmt.all(limit); }
 
-module.exports = { saveLead, markNotified, listLeads, DB_FILE };
+// ── очередь недоставленных в MAX ─────────────────────────────────────────────
+
+// Заявки, которые ещё не ушли в MAX (свежие — старше суток не долбим).
+const pendingStmt = db.prepare(`
+  SELECT * FROM leads
+  WHERE notified = 0 AND ts >= ?
+  ORDER BY id ASC LIMIT ?
+`);
+function pendingLeads({ maxAgeHours = 24, limit = 50 } = {}) {
+  const since = new Date(Date.now() - maxAgeHours * 3600e3).toISOString();
+  return pendingStmt.all(since, limit);
+}
+
+// Отметить, что заявка ушла на резервную почту.
+const emailedStmt = db.prepare('UPDATE leads SET emailed = 1 WHERE id = ?');
+function markEmailed(id) { emailedStmt.run(id); }
+
+// Зафиксировать неудачную попытку доставки в MAX.
+const attemptStmt = db.prepare('UPDATE leads SET attempts = attempts + 1, last_error = ? WHERE id = ?');
+function bumpAttempt(id, err) { attemptStmt.run(String(err || '').slice(0, 500), id); }
+
+module.exports = {
+  saveLead, markNotified, listLeads,
+  pendingLeads, markEmailed, bumpAttempt,
+  DB_FILE
+};
