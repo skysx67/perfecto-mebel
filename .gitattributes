@@ -1,6 +1,6 @@
-# Файлы, которые исполняются на Linux-сервере, ВСЕГДА хранятся с LF.
-# Иначе Windows-окончания строк (CRLF) ломают bash-скрипты и конфиги:
-#   bash: setup.sh: /usr/bin/env bash^M: bad interpreter
+# Страховка: файлы, которые исполняются на Linux-сервере, всегда хранятся с LF.
+# Проект редактируется на Windows, где git может подставить CRLF, а это ломает
+# запуск на сервере: bash: setup.sh: /usr/bin/env bash^M: bad interpreter
 *.sh        text eol=lf
 *.service   text eol=lf
 *.conf      text eol=lf
