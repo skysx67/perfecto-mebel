@@ -1,0 +1,39 @@
+# systemd-юнит бэкенда заявок «Перфекто».
+# Ставится скриптом setup.sh в /etc/systemd/system/perfecto-lead.service
+#
+# Управление:
+#   systemctl status perfecto-lead     — состояние
+#   systemctl restart perfecto-lead    — перезапустить
+#   journalctl -u perfecto-lead -f     — живой лог
+
+[Unit]
+Description=Perfecto — приём заявок с сайта (SQLite + уведомления в MAX)
+Documentation=https://github.com/skysx67/perfecto-mebel
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=perfecto
+Group=perfecto
+WorkingDirectory=/opt/perfecto/backend
+ExecStart=/usr/bin/node --env-file=/opt/perfecto/backend/.env /opt/perfecto/backend/server.js
+
+# перезапуск при любом падении — бот должен работать всегда
+Restart=always
+RestartSec=5
+
+# логи в journald
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=perfecto-lead
+
+# базовая изоляция процесса
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/opt/perfecto/backend
+
+[Install]
+WantedBy=multi-user.target

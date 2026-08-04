@@ -5,7 +5,7 @@
   "description": "Перфекто — приём заявок с лендинга: SQLite + уведомление менеджеру в мессенджер MAX",
   "main": "server.js",
   "engines": {
-    "node": ">=22.5.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "start": "node --env-file=.env server.js",

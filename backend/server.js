@@ -120,8 +120,12 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log('Perfecto lead backend слушает :' + PORT);
+// Слушаем только localhost: наружу запросы пускает nginx (см. deploy/).
+// Переопределить можно переменной HOST (например HOST=0.0.0.0).
+const HOST = process.env.HOST || '127.0.0.1';
+
+server.listen(PORT, HOST, () => {
+  console.log('Perfecto lead backend слушает ' + HOST + ':' + PORT);
   console.log('MAX_TOKEN: ' + (process.env.MAX_TOKEN ? 'задан' : 'НЕ задан') +
     ' · MANAGER_USER_ID: ' + (MANAGER || 'НЕ задан'));
 });

@@ -1068,9 +1068,13 @@ back.addEventListener('click', function(){ if(cur > 0) showStep(cur - 1); });
 
 // Куда отправлять заявки. Заполнить после деплоя бэкенда (папка backend/).
 // Пока пусто — сайт работает как раньше, просто без отправки в MAX.
-var LEAD_ENDPOINT = ''; // ПРОДАКШН: сюда URL бэкенда, напр. 'https://ваш-сервер.ru/lead'
-// локальная проверка: при открытии сайта с localhost заявки сами идут на локальный бэкенд
+// Адрес бэкенда определяется сам — править вручную не нужно:
+//   localhost      → локальный бэкенд (проверка на своём ПК)
+//   github.io      → пусто (тестовый стенд, бэкенда там нет — заявки не уходят)
+//   свой домен     → '/lead' на том же домене (nginx проксирует на бэкенд)
+var LEAD_ENDPOINT = '/lead';
 if(location.hostname==='localhost'||location.hostname==='127.0.0.1') LEAD_ENDPOINT='http://localhost:8787/lead';
+else if(location.hostname.indexOf('github.io')!==-1||location.protocol==='file:') LEAD_ENDPOINT='';
 function sendLead(data){
   console.log('LEAD:', data);
   if(!LEAD_ENDPOINT) return;
