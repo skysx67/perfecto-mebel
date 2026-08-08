@@ -225,6 +225,55 @@ nav a:hover{color:var(--blue)}
 .cat:hover .go i{transform:translateX(6px)}
 .cat:hover .go{color:#2E97B4}
 
+/* герой: показываем фото, а если файла ещё нет — анимированный чертёж */
+.hero-vis{position:relative}
+.hero-vis .blueprint{display:none}
+.hero-vis.no-photo .blueprint{display:block}
+.hero-vis.no-photo .ph{display:none}
+.hero-vis .ph{border-radius:var(--r);box-shadow:var(--shadow)}
+
+/* ---------- УНИВЕРСАЛЬНЫЙ СЛОТ ПОД ФОТО ----------
+   Кладём фото в images/ с нужным именем — оно появится само.
+   Пока файла нет, показывается аккуратная заглушка (класс is-empty
+   ставится обработчиком onerror у <img>), сайт не выглядит сломанным. */
+.ph{position:relative;overflow:hidden;border-radius:16px;margin:0;background:var(--ink-card);display:block}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+.ph:hover img{transform:scale(1.05)}
+.ph .ph-cap{position:absolute;left:12px;bottom:12px;z-index:1;background:rgba(30,31,31,.72);backdrop-filter:blur(8px);
+  color:#fff;font-size:.74rem;font-weight:700;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.16)}
+.ph.is-empty{display:grid;place-items:center;border:1.5px dashed var(--blue-line);background:transparent}
+.ph.is-empty img,.ph.is-empty .ph-cap{display:none}
+.ph.is-empty::after{content:attr(data-empty);color:var(--tx-mut-l);font-size:.78rem;font-weight:600;
+  text-align:center;padding:14px;line-height:1.45}
+.light .ph{background:#e6ecee}
+.light .ph.is-empty{border-color:rgba(43,42,41,.18)}
+.light .ph.is-empty::after{color:var(--tx-mut-d)}
+/* пропорции слота */
+.r-16x9{aspect-ratio:16/9}
+.r-4x3 {aspect-ratio:4/3}
+.r-1x1 {aspect-ratio:1/1}
+.r-3x4 {aspect-ratio:3/4}
+
+/* ---------- галерея работ ---------- */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.gal .ph{border-radius:18px}
+.gal .g-wide{grid-column:span 2}
+.gal .g-tall{grid-row:span 2}
+.gal-note{margin-top:22px;text-align:center;color:var(--tx-mut-d);font-size:.9rem}
+@media(max-width:960px){.gal{grid-template-columns:repeat(2,1fr)}}
+/* на телефоне оставляем 2 колонки: 12 фото в один столбец — слишком длинная прокрутка */
+@media(max-width:520px){.gal{gap:10px}.gal .g-wide{grid-column:span 2}.gal .g-tall{grid-row:span 1}}
+
+/* ---------- фото в блоке «почему» ---------- */
+.why-photos{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:34px}
+@media(max-width:640px){.why-photos{grid-template-columns:1fr}}
+
+/* ---------- фото в шагах ---------- */
+.step .ph{margin-bottom:14px}
+
+/* ---------- фото в контактах ---------- */
+.contact-photo{margin-top:22px}
+
 /* ---------- фото-карточки каталога ---------- */
 .cat--wide{grid-column:span 2}
 .cat--tall{grid-row:span 2}
@@ -441,7 +490,8 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
       <small>студия мебельных решений</small>
     </a>
     <nav>
-      <a href="#catalog">Каталог и работы</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#works">Наши работы</a>
       <a href="#steps">Как мы работаем</a>
       <a href="#reviews">Отзывы</a>
       <a href="#contacts">Контакты</a>
@@ -468,7 +518,14 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <div class="chip">Замер и дизайн-проект — <b>0 ₽</b></div>
       </div>
     </div>
-    <div class="blueprint" aria-hidden="true">
+    <div class="hero-vis">
+      <!-- Главное фото. Пока файла нет — показывается анимированный чертёж (ниже). -->
+      <figure class="ph r-4x3">
+        <img src="images/hero.jpg" alt="Кухня на заказ от студии «Перфекто» в интерьере тюменской квартиры"
+             onerror="this.closest('.hero-vis').classList.add('no-photo')">
+        <span class="ph-cap">Наша работа · Тюмень</span>
+      </figure>
+      <div class="blueprint" aria-hidden="true">
       <svg viewBox="0 0 560 400" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <!-- верхние шкафы -->
         <rect class="draw d1" x="45" y="50" width="105" height="72" rx="4" stroke="#73C8DD" stroke-width="2.5"/>
@@ -504,6 +561,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <line class="draw d5" x1="545" y1="50" x2="545" y2="333" stroke="#73C8DD" stroke-width="1.5" opacity=".5" stroke-dasharray="6 6"/>
       </svg>
       <div class="bp-note">Проект и замер — 0 ₽</div>
+      </div>
     </div>
   </div>
 </section>
@@ -635,6 +693,32 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
   </div>
 </section>
 
+<!-- ======== ГАЛЕРЕЯ РАБОТ ========
+     Слоты под фото: положить файлы images/work-01.jpg … work-12.jpg —
+     они появятся автоматически. Пока файла нет, слот показывает заглушку. -->
+<section class="light pad" id="works" style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker">Портфолио</div>
+    <h2>Наши работы в интерьерах<br>тюменских квартир и домов</h2>
+    <p class="sub">Это мебель, которую мы спроектировали, изготовили и собрали. Реальные объекты — не рендеры и не картинки из интернета.</p>
+    <div class="gal">
+      <figure class="ph r-1x1"><img src="images/work-01.jpg" alt="Кухня на заказ в интерьере, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-02.jpg" alt="Шкаф на заказ в спальню, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Шкаф</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-03.jpg" alt="Гардеробная на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Гардеробная</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-04.jpg" alt="Прихожая на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Прихожая</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-05.jpg" alt="Кухня с островом на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-06.jpg" alt="Детская мебель на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Детская</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-07.jpg" alt="Мебель для ванной на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Ванная</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-08.jpg" alt="Встроенный шкаф на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Шкаф</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-09.jpg" alt="Кухонный гарнитур на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-10.jpg" alt="Мебель для гостиной на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Гостиная</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-11.jpg" alt="Рабочее место и стеллаж на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кабинет</span></figure>
+      <figure class="ph r-1x1"><img src="images/work-12.jpg" alt="Мебель на заказ для квартиры под ключ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Квартира под ключ</span></figure>
+    </div>
+    <div class="gal-note">Хотите посмотреть больше? Покажем проекты, похожие на вашу задачу, прямо на замере.</div>
+  </div>
+</section>
+
 <!-- ======== ПОЧЕМУ НЕДОРОГО ======== -->
 <section class="dark pad" id="why">
   <div class="wrap">
@@ -658,6 +742,10 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <div class="n">04</div>
         <div><h3>Небольшая команда мастеров, а не офис</h3><p>У каждого мастера — опыт от 10 лет. Вы не оплачиваете раздутый штат и огромные шоурумы, поэтому работаем с любым бюджетом: от прихожей до квартиры под ключ.</p></div>
       </div>
+    </div>
+    <div class="why-photos">
+      <figure class="ph r-16x9"><img src="images/production-1.jpg" alt="Производство корпусной мебели в Тюмени" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото производства — скоро"><span class="ph-cap">Наше производство · Тюмень</span></figure>
+      <figure class="ph r-16x9"><img src="images/production-2.jpg" alt="Материалы и фурнитура для мебели на заказ" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото материалов и фурнитуры — скоро"><span class="ph-cap">Материалы и фурнитура</span></figure>
     </div>
     <div class="stats">
       <div class="stat reveal"><b data-count="10">0</b><span>лет — минимальный опыт<br>каждого мастера</span></div>
@@ -719,24 +807,29 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
     <h2>От заявки до готовой мебели — 5 шагов</h2>
     <div class="steps">
       <div class="step reveal">
+        <figure class="ph r-4x3"><img src="images/step-1.jpg" alt="Консультация по заказу мебели" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"></figure>
         <h3>Оставляете заявку</h3>
         <p>Через квиз, форму или по телефону. Перезвоним в ближайшее время в рабочие часы.</p>
       </div>
       <div class="step reveal" data-d="1">
+        <figure class="ph r-4x3"><img src="images/step-2.jpg" alt="Замер помещения перед изготовлением мебели" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото замера — скоро"></figure>
         <h3>Приезжает замерщик</h3>
         <p>В удобные день и время. Замерит всё до миллиметра прямо у вас дома.</p>
         <span class="free">Бесплатно</span>
       </div>
       <div class="step reveal" data-d="2">
+        <figure class="ph r-4x3"><img src="images/step-3.jpg" alt="3D-проект будущей мебели" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Скрин 3D-проекта — скоро"></figure>
         <h3>3D-проект и стоимость</h3>
         <p>Увидите свою мебель ещё до производства — с точной ценой по каждой позиции.</p>
         <span class="free">Бесплатно</span>
       </div>
       <div class="step reveal" data-d="3">
+        <figure class="ph r-4x3"><img src="images/step-4.jpg" alt="Производство мебели в Тюмени" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото цеха — скоро"></figure>
         <h3>Производство</h3>
         <p>Изготавливаем на производстве в Тюмени. Цена и срок зафиксированы в договоре.</p>
       </div>
       <div class="step reveal" data-d="4">
+        <figure class="ph r-4x3"><img src="images/step-5.jpg" alt="Сборка и установка мебели у клиента" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото монтажа — скоро"></figure>
         <h3>Доставка и монтаж</h3>
         <p>Привезём, соберём, установим и уберём за собой. Останется только принять работу и пользоваться.</p>
       </div>
@@ -950,6 +1043,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
           <a href="https://www.instagram.com/studio_perfecto_72/" target="_blank" rel="noopener">📷 Instagram*</a>
           <a href="https://2gis.ru/tyumen/firm/70000001037188622" target="_blank" rel="noopener">🗺️ 2ГИС</a>
         </div>
+        <figure class="ph r-16x9 contact-photo"><img src="images/office.jpg" alt="Офис студии мебельных решений «Перфекто» в Тюмени на Широтной, 209" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото офиса — скоро"><span class="ph-cap">Широтная, 209 · 2 этаж</span></figure>
         <p style="font-size:.68rem;color:rgba(255,255,255,.35);margin-top:14px">* Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой в РФ</p>
       </div>
       <form class="cform" id="leadForm">
