@@ -22,9 +22,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232B2A29'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%2373C8DD' text-anchor='middle'%3EП%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@800;900&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -97,26 +97,35 @@
   --blue-soft:rgba(115,200,221,.14);
   --blue-line:rgba(115,200,221,.35);
   --white:#FFFFFF;
-  --light:#F4F7F8;
+  --light:#F7F4EF;        /* тёплый кремовый — база премиум-палитры */
   --tx-dark:#2B2A29;
   --tx-mut-d:rgba(43,42,41,.66);
   --tx-mut-l:rgba(255,255,255,.68);
   --line-d:rgba(43,42,41,.12);
   --line-l:rgba(255,255,255,.1);
+  --lime:#8FC63D;         /* лаймовый акцент из фирменного буклета */
+  --lime-soft:rgba(143,198,61,.14);
+  --lime-line:rgba(143,198,61,.38);
+  --font-display:"Cormorant Garamond",Georgia,serif;
+  --font-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --r:22px;
   --shadow:0 18px 50px -18px rgba(43,42,41,.25);
   --glow:0 12px 40px -10px rgba(115,200,221,.5);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Manrope',system-ui,sans-serif;background:var(--ink-deep);color:var(--white);line-height:1.6;overflow-x:hidden}
+body{font-family:var(--font-body);background:var(--ink-deep);color:var(--white);line-height:1.6;overflow-x:hidden}
 img,svg{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 ul{list-style:none}
 section{scroll-margin-top:84px}
 .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
-h1,h2,h3{font-weight:800;line-height:1.16;letter-spacing:-.01em}
-h2{font-size:clamp(1.7rem,3.6vw,2.6rem);margin-bottom:14px}
+/* Заголовки — серифный Cormorant: у него мелкая x-height, поэтому кегль
+   крупнее, вес 600 и обычный трекинг (в отличие от прежнего жирного Nunito). */
+h1,h2{font-family:var(--font-display);font-weight:600;line-height:1.08;letter-spacing:-.005em}
+h3{font-weight:700;line-height:1.2;letter-spacing:-.01em}
+h1{font-size:clamp(2.6rem,6vw,4.4rem)}
+h2{font-size:clamp(2.1rem,4.6vw,3.4rem);margin-bottom:14px}
 .sub{font-size:1.06rem;max-width:640px}
 .accent{color:var(--blue)}
 .kicker{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
@@ -135,7 +144,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.6rem);margin-bottom:14px}
 
 /* ---------- логотип ---------- */
 .logo{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1}
-.logo b{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.55rem;letter-spacing:.01em;color:var(--white)}
+.logo b{font-family:var(--font-display);font-weight:900;font-size:1.55rem;letter-spacing:.01em;color:var(--white)}
 .logo b i{font-style:normal;color:var(--blue)}
 .logo small{display:flex;align-items:center;gap:8px;font-size:.5rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--tx-mut-l)}
 .logo small::before,.logo small::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.35)}
@@ -165,7 +174,9 @@ nav a:hover{color:var(--blue)}
   linear-gradient(90deg,rgba(115,200,221,.05) 1px,transparent 1px);
   background-size:44px 44px;mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 75%)}
 .hgrid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
-.hero h1{font-size:clamp(2.1rem,4.6vw,3.5rem);margin-bottom:20px}
+/* Cormorant мельче Nunito при том же кегле — поднимаем размер, чтобы
+   первый экран звучал в полный голос и h1 был заметно крупнее h2 */
+.hero h1{font-size:clamp(2.8rem,6.2vw,4.6rem);margin-bottom:20px}
 .hero .sub{color:var(--tx-mut-l);margin-bottom:32px}
 .hcta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
 .chips{display:flex;gap:10px;flex-wrap:wrap}
@@ -264,6 +275,39 @@ nav a:hover{color:var(--blue)}
 /* на телефоне оставляем 2 колонки: 12 фото в один столбец — слишком длинная прокрутка */
 @media(max-width:520px){.gal{gap:10px}.gal .g-wide{grid-column:span 2}.gal .g-tall{grid-row:span 1}}
 
+/* ---------- бенто «Почему Перфекто» (текст поверх фото) ---------- */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:46px}
+.bt{position:relative;overflow:hidden;border-radius:20px;min-height:290px;padding:28px;
+  display:flex;flex-direction:column;justify-content:flex-end}
+.bt-media{position:absolute;inset:0;background:var(--ink)}
+.bt-media img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.bt:hover .bt-media img{transform:scale(1.05)}
+.bt-media::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(24,25,25,.92) 0%,rgba(24,25,25,.55) 42%,rgba(24,25,25,.12) 100%)}
+.bt-media.is-empty img{display:none}
+.bt-in{position:relative;max-width:34ch}
+.bt h3{font-family:var(--font-display);font-weight:600;font-size:1.6rem;line-height:1.15;color:#fff;margin-bottom:10px;letter-spacing:0}
+.bt p{font-size:.92rem;line-height:1.55;color:rgba(255,255,255,.78)}
+.bt-lg{grid-column:span 2;grid-row:span 2;min-height:600px}
+.bt-lg h3{font-size:2.1rem}
+.bt-lg p{font-size:1rem;color:rgba(255,255,255,.85)}
+.bt-wide{grid-column:span 2}
+/* плитка-акцент на лайме — без фото */
+.bt-lime{background:var(--lime);justify-content:space-between}
+.bt-lime .bt-in{max-width:100%}
+.bt-lime h3,.bt-lime .lead{color:var(--ink)}
+.bt-lime p{color:rgba(43,42,41,.78)}
+.bt-lime .lead{font-family:var(--font-display);font-weight:600;font-size:3.2rem;line-height:1;margin-bottom:auto}
+@media(max-width:960px){
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .bt-lg{grid-column:span 2;grid-row:auto;min-height:420px}
+}
+@media(max-width:560px){
+  .bento{grid-template-columns:1fr}
+  .bt,.bt-lg,.bt-wide{grid-column:span 1;min-height:280px}
+  .bt-lg{min-height:360px}
+}
+
 /* ---------- фото в блоке «почему» ---------- */
 .why-photos{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:34px}
 @media(max-width:640px){.why-photos{grid-template-columns:1fr}}
@@ -303,7 +347,7 @@ nav a:hover{color:var(--blue)}
 .whys{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:44px;position:relative}
 .why{background:var(--ink-card);border:1px solid var(--line-l);border-radius:var(--r);padding:30px;display:flex;gap:20px;transition:transform .3s,border-color .3s}
 .why:hover{transform:translateY(-5px);border-color:var(--blue-line)}
-.why .n{font-family:'Nunito',sans-serif;font-weight:900;font-size:2rem;color:var(--blue);line-height:1;opacity:.9}
+.why .n{font-family:var(--font-display);font-weight:900;font-size:2rem;color:var(--blue);line-height:1;opacity:.9}
 .why h3{font-size:1.08rem;margin-bottom:6px}
 .why p{font-size:.92rem;color:var(--tx-mut-l)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:54px;position:relative}
@@ -329,7 +373,7 @@ nav a:hover{color:var(--blue)}
 .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:48px;counter-reset:step}
 .step{position:relative;background:var(--white);border:1px solid var(--line-d);border-radius:var(--r);padding:56px 20px 24px;transition:transform .3s,box-shadow .3s}
 .step:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-.step::before{counter-increment:step;content:"0" counter(step);position:absolute;top:18px;left:20px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.5rem;color:var(--blue)}
+.step::before{counter-increment:step;content:"0" counter(step);position:absolute;top:18px;left:20px;font-family:var(--font-display);font-weight:900;font-size:1.5rem;color:var(--blue)}
 .step::after{content:"";position:absolute;top:34px;right:-14px;width:14px;height:2px;background:var(--blue);opacity:.5}
 .step:last-child::after{display:none}
 .step h3{font-size:.98rem;margin-bottom:6px}
@@ -337,33 +381,12 @@ nav a:hover{color:var(--blue)}
 .step .free{display:inline-block;margin-top:10px;font-size:.72rem;font-weight:800;letter-spacing:.06em;color:#0D2830;background:var(--blue);padding:4px 10px;border-radius:999px}
 
 /* ---------- квиз ---------- */
-.quiz-card{max-width:760px;margin:46px auto 0;background:var(--ink-card);border:1px solid var(--line-l);border-radius:calc(var(--r) + 6px);padding:40px;position:relative;box-shadow:0 30px 80px -30px rgba(0,0,0,.6)}
-.quiz-card::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(140deg,var(--blue-line),transparent 40%,transparent 60%,var(--blue-line));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-.qprog{height:6px;background:rgba(255,255,255,.1);border-radius:99px;margin-bottom:8px;overflow:hidden}
-.qprog i{display:block;height:100%;width:20%;background:var(--blue);border-radius:99px;transition:width .4s ease}
-.qcount{font-size:.8rem;color:var(--tx-mut-l);margin-bottom:22px}
-.qstep{display:none;animation:qin .45s ease}
-.qstep.on{display:block}
-@keyframes qin{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
-.qstep h3{font-size:1.35rem;margin-bottom:20px}
-.qopts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.qopt{font-family:inherit;font-size:.98rem;font-weight:600;color:var(--white);text-align:left;background:rgba(255,255,255,.05);border:1.5px solid var(--line-l);border-radius:16px;padding:18px 20px;cursor:pointer;transition:border-color .2s,background .2s,transform .2s;display:flex;align-items:center;gap:12px}
-.qopt:hover{border-color:var(--blue);background:var(--blue-soft);transform:translateY(-2px)}
-.qopt .qi{font-size:1.3rem}
-.qback{margin-top:18px;background:none;border:0;color:var(--tx-mut-l);font-family:inherit;font-size:.86rem;font-weight:600;cursor:pointer;display:none}
-.qback:hover{color:var(--blue)}
 .qform{display:grid;gap:14px;margin-top:6px}
 .inp{font-family:inherit;font-size:1rem;color:var(--white);background:rgba(255,255,255,.06);border:1.5px solid var(--line-l);border-radius:14px;padding:16px 18px;width:100%;transition:border-color .2s}
 .inp::placeholder{color:rgba(255,255,255,.4)}
 .inp:focus{outline:none;border-color:var(--blue)}
 .agree{display:flex;gap:10px;align-items:flex-start;font-size:.78rem;color:var(--tx-mut-l)}
 .agree input{margin-top:3px;accent-color:var(--blue)}
-.qgift{display:flex;gap:12px;align-items:center;background:var(--blue-soft);border:1px dashed var(--blue-line);border-radius:14px;padding:14px 16px;font-size:.88rem;margin-bottom:18px}
-.qgift b{color:var(--blue)}
-.qdone{text-align:center;padding:30px 10px;display:none}
-.qdone .big{font-size:3rem;margin-bottom:10px}
-.qdone h3{font-size:1.4rem;margin-bottom:10px}
-.qdone p{color:var(--tx-mut-l)}
 
 /* ---------- отзывы ---------- */
 .rev-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
@@ -390,7 +413,7 @@ nav a:hover{color:var(--blue)}
 .faq details[open]{border-color:var(--blue)}
 .faq summary{list-style:none;cursor:pointer;padding:22px 26px;font-weight:800;font-size:1.02rem;display:flex;justify-content:space-between;align-items:center;gap:16px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:800;color:var(--blue);transition:transform .3s;flex-shrink:0}
+.faq summary::after{content:"+";font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--blue);transition:transform .3s;flex-shrink:0}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq .a{padding:0 26px 22px;font-size:.94rem;color:var(--tx-mut-d)}
 
@@ -467,8 +490,6 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
   .cat--wide .cat-photo,.cat--tall .cat-photo{flex:none;min-height:0}
   .cat--wide .cat-photo{aspect-ratio:4/3}
   .cat--tall .cat-photo{aspect-ratio:3/4}
-  .qopts{grid-template-columns:1fr}
-  .quiz-card{padding:26px 20px}
   .hphone{display:none}
   .hbtn{display:none}
   .banner{padding:32px 26px}
@@ -497,7 +518,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
       <a href="#contacts">Контакты</a>
     </nav>
     <a class="hphone" href="tel:+79044952700">+7 904 495-27-00<span>ежедневно 10:00–20:00</span></a>
-    <a href="#quiz" class="btn btn-blue hbtn">Бесплатный замер</a>
+    <a href="#contacts" class="btn btn-blue hbtn">Бесплатный замер</a>
   </div>
 </header>
 
@@ -509,7 +530,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
       <h1>Мебель на заказ точно под ваши размеры — <span class="accent">и под ваш бюджет</span></h1>
       <p class="sub">Кухни, шкафы и гардеробные — производство в Тюмени. Приедем, замерим, сделаем 3D-проект и назовём точную цену — всё бесплатно, ещё до договора.</p>
       <div class="hcta">
-        <a href="#quiz" class="btn btn-blue">Рассчитать стоимость мебели</a>
+        <a href="#contacts" class="btn btn-blue">Рассчитать стоимость мебели</a>
         <a href="tel:+79044952700" class="btn btn-ghost">Позвонить</a>
       </div>
       <div class="chips">
@@ -603,7 +624,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
     </div>
     <div class="bridge reveal">
       <h3>Мебель на заказ решает всё это — и это <span>доступнее, чем кажется</span>. Проверьте сами: расчёт бесплатный.</h3>
-      <a href="#quiz" class="btn btn-blue">Узнать свою цену</a>
+      <a href="#contacts" class="btn btn-blue">Узнать свою цену</a>
     </div>
   </div>
 </section>
@@ -624,7 +645,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
           <h3>Кухни на заказ</h3>
           <div class="price">Цена по договору</div>
           <p class="feat">Прямые, угловые, с островом. Любая высота — используем всё пространство до потолка. Срок изготовления — 25–35 рабочих дней.</p>
-          <a href="#quiz" class="go">Рассчитать мою кухню <i>→</i></a>
+          <a href="#contacts" class="go">Рассчитать мою кухню <i>→</i></a>
         </div>
       </div>
       <div class="cat cat--tall reveal" data-d="1">
@@ -636,7 +657,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
           <h3>Шкафы</h3>
           <div class="price">Цена по договору</div>
           <p class="feat">Встроенные и корпусные. Зеркала, лакобель, любое наполнение под ваши вещи. Срок — около месяца.</p>
-          <a href="#quiz" class="go">Рассчитать мой шкаф <i>→</i></a>
+          <a href="#contacts" class="go">Рассчитать мой шкаф <i>→</i></a>
         </div>
       </div>
       <div class="cat reveal" data-d="2">
@@ -648,7 +669,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
           <h3>Гардеробные</h3>
           <div class="price">Цена по договору</div>
           <p class="feat">Из кладовки или ниши сделаем гардеробную мечты — полки, штанги, ящики, подсветка. Срок — около месяца.</p>
-          <a href="#quiz" class="go">Рассчитать гардеробную <i>→</i></a>
+          <a href="#contacts" class="go">Рассчитать гардеробную <i>→</i></a>
         </div>
       </div>
       <div class="cat reveal">
@@ -660,7 +681,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
           <h3>Прихожие</h3>
           <div class="price">Цена по договору</div>
           <p class="feat">Компактные решения даже для узких коридоров: обувницы, зеркала, места для хранения.</p>
-          <a href="#quiz" class="go">Рассчитать прихожую <i>→</i></a>
+          <a href="#contacts" class="go">Рассчитать прихожую <i>→</i></a>
         </div>
       </div>
       <div class="cat reveal" data-d="1">
@@ -672,7 +693,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
           <h3>Детская мебель</h3>
           <div class="price">Цена по договору</div>
           <p class="feat">Кровати, столы и шкафы, которые «растут» вместе с ребёнком. Безопасные материалы. Срок — 25–35 рабочих дней.</p>
-          <a href="#quiz" class="go">Рассчитать детскую <i>→</i></a>
+          <a href="#contacts" class="go">Рассчитать детскую <i>→</i></a>
         </div>
       </div>
       <div class="cat reveal" data-d="2">
@@ -681,13 +702,13 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
           <h3>Мебель для ванной</h3>
           <div class="price">Цена по договору</div>
           <p class="feat">Влагостойкие тумбы, пеналы и зеркальные шкафы точно под вашу сантехнику. Срок — около месяца.</p>
-          <a href="#quiz" class="go">Рассчитать для ванной <i>→</i></a>
+          <a href="#contacts" class="go">Рассчитать для ванной <i>→</i></a>
         </div>
       </div>
       <div class="cat cat-cta reveal" data-d="2">
         <h3>Хотите так же?</h3>
         <p>Приедем, снимем размеры и покажем ваш проект в 3D — бесплатно.</p>
-        <a href="#quiz" class="btn btn-blue">Рассчитать свой проект</a>
+        <a href="#contacts" class="btn btn-blue">Рассчитать свой проект</a>
       </div>
     </div>
   </div>
@@ -719,6 +740,57 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
   </div>
 </section>
 
+<!-- ======== ПОЧЕМУ ПЕРФЕКТО (бенто: текст поверх фото) ======== -->
+<section class="light pad" id="why-perfecto" style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker">Почему «Перфекто»</div>
+    <h2>Почему нам доверяют мебель<br>на заказ в Тюмени</h2>
+    <div class="bento">
+
+      <article class="bt bt-lg">
+        <div class="bt-media"><img src="images/production-1.jpg" alt="Производство мебели на заказ в Тюмени — цех «Перфекто»" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"></div>
+        <div class="bt-in">
+          <h3>Производство открыто<br>для клиентов</h3>
+          <p>Приезжайте в наш цех в Тюмени в любой момент и смотрите, на каком этапе ваш заказ. Цена и срок зафиксированы в договоре — без «мы не учли» и доплат в процессе.</p>
+        </div>
+      </article>
+
+      <article class="bt">
+        <div class="bt-media"><img src="images/team.jpg" alt="Мастера мебельного производства «Перфекто» с опытом более 10 лет" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"></div>
+        <div class="bt-in">
+          <h3>Мастера с опытом<br>от 10 лет</h3>
+          <p>Дизайнер подберёт решение под ваш бюджет, технолог проверит безопасность конструкции.</p>
+        </div>
+      </article>
+
+      <article class="bt bt-lime">
+        <div class="bt-in"><span class="lead">2 года</span></div>
+        <div class="bt-in">
+          <h3>гарантии по договору</h3>
+          <p>Отвечаем за каждый шов, петлю и направляющую.</p>
+        </div>
+      </article>
+
+      <article class="bt">
+        <div class="bt-media"><img src="images/step-5.jpg" alt="Сборка и установка мебели на заказ у клиента" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"></div>
+        <div class="bt-in">
+          <h3>Соберём и уберём<br>за собой</h3>
+          <p>Бригада приезжает вовремя, работает аккуратно и оставляет чистоту.</p>
+        </div>
+      </article>
+
+      <article class="bt">
+        <div class="bt-media"><img src="images/production-2.jpg" alt="Материалы и фурнитура для корпусной мебели на заказ" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"></div>
+        <div class="bt-in">
+          <h3>Материалы, которые<br>служат годами</h3>
+          <p>Современное оборудование и проверенная фурнитура — мебель не расшатается через год.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
 <!-- ======== ПОЧЕМУ НЕДОРОГО ======== -->
 <section class="dark pad" id="why">
   <div class="wrap">
@@ -743,10 +815,6 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <div><h3>Небольшая команда мастеров, а не офис</h3><p>У каждого мастера — опыт от 10 лет. Вы не оплачиваете раздутый штат и огромные шоурумы, поэтому работаем с любым бюджетом: от прихожей до квартиры под ключ.</p></div>
       </div>
     </div>
-    <div class="why-photos">
-      <figure class="ph r-16x9"><img src="images/production-1.jpg" alt="Производство корпусной мебели в Тюмени" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото производства — скоро"><span class="ph-cap">Наше производство · Тюмень</span></figure>
-      <figure class="ph r-16x9"><img src="images/production-2.jpg" alt="Материалы и фурнитура для мебели на заказ" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото материалов и фурнитуры — скоро"><span class="ph-cap">Материалы и фурнитура</span></figure>
-    </div>
     <div class="stats">
       <div class="stat reveal"><b data-count="10">0</b><span>лет — минимальный опыт<br>каждого мастера</span></div>
       <div class="stat reveal" data-d="1"><b data-count="4.9" data-dec="1">0</b><span>рейтинг компании<br>на 2ГИС</span></div>
@@ -764,7 +832,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <h2>Бесплатный выезд замерщика по Тюмени</h2>
         <p>Замер + 3D-проект + расчёт стоимости = 0 ₽. Даже если вы пока просто прицениваетесь — посчитаем, покажем и не будем навязываться.</p>
       </div>
-      <a href="#quiz" class="btn btn-dark">Записаться на замер</a>
+      <a href="#contacts" class="btn btn-dark">Записаться на замер</a>
     </div>
   </div>
 </section>
@@ -833,83 +901,6 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <h3>Доставка и монтаж</h3>
         <p>Привезём, соберём, установим и уберём за собой. Останется только принять работу и пользоваться.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======== КВИЗ ======== -->
-<section class="dark pad" id="quiz">
-  <div class="wrap">
-    <div style="text-align:center">
-      <div class="kicker" style="justify-content:center">Расчёт стоимости</div>
-      <h2>Узнайте цену вашей мебели, не выходя из дома</h2>
-      <p class="sub" style="margin:0 auto;color:var(--tx-mut-l)">Ответьте на 4 коротких вопроса — подготовим персональный расчёт, а в подарок пришлём PDF-гид по выбору мебели.</p>
-    </div>
-    <div class="quiz-card">
-      <div class="qprog"><i id="qbar"></i></div>
-      <div class="qcount" id="qcount">Вопрос 1 из 4</div>
-
-      <div class="qstep on" data-key="Тип мебели">
-        <h3>Какую мебель будем делать?</h3>
-        <div class="qopts">
-          <button class="qopt" data-val="Кухня"><span class="qi">🍳</span>Кухню</button>
-          <button class="qopt" data-val="Шкаф или гардеробная"><span class="qi">🚪</span>Шкаф или гардеробную</button>
-          <button class="qopt" data-val="Прихожая"><span class="qi">🏠</span>Прихожую</button>
-          <button class="qopt" data-val="Другая мебель"><span class="qi">✨</span>Другую мебель</button>
-        </div>
-      </div>
-
-      <div class="qstep" data-key="Замеры">
-        <h3>Знаете ли вы размеры помещения?</h3>
-        <div class="qopts">
-          <button class="qopt" data-val="Есть точные размеры"><span class="qi">📐</span>Да, есть точные размеры</button>
-          <button class="qopt" data-val="Знаю примерно"><span class="qi">🤏</span>Знаю примерно</button>
-          <button class="qopt" data-val="Нужен замерщик"><span class="qi">🚗</span>Нет — нужен замерщик (это бесплатно)</button>
-          <button class="qopt" data-val="Помещение ещё в ремонте"><span class="qi">🧱</span>Помещение ещё в ремонте</button>
-        </div>
-      </div>
-
-      <div class="qstep" data-key="Дизайн">
-        <h3>Есть ли у вас проект или примеры того, что хотите?</h3>
-        <div class="qopts">
-          <button class="qopt" data-val="Есть дизайн-проект"><span class="qi">📐</span>Есть дизайн-проект</button>
-          <button class="qopt" data-val="Есть фото-примеры"><span class="qi">📱</span>Сохранил(а) фото-примеры</button>
-          <button class="qopt" data-val="Нужна помощь дизайнера"><span class="qi">🎨</span>Нужна помощь с дизайном</button>
-          <button class="qopt" data-val="Доверюсь вашему опыту"><span class="qi">🤝</span>Доверюсь вашему опыту</button>
-        </div>
-      </div>
-
-      <div class="qstep" data-key="Сроки">
-        <h3>Когда нужна мебель?</h3>
-        <div class="qopts">
-          <button class="qopt" data-val="Как можно скорее"><span class="qi">🔥</span>Как можно скорее</button>
-          <button class="qopt" data-val="В ближайшие 1–2 месяца"><span class="qi">📅</span>В ближайшие 1–2 месяца</button>
-          <button class="qopt" data-val="В ближайшие полгода"><span class="qi">🗓️</span>В ближайшие полгода</button>
-          <button class="qopt" data-val="Просто прицениваюсь"><span class="qi">👀</span>Просто прицениваюсь</button>
-        </div>
-      </div>
-
-      <div class="qstep" data-key="final">
-        <h3>Готово! Куда отправить расчёт?</h3>
-        <div class="qgift">🎁 <div>Бонус: PDF-гид <b>«7 ошибок при заказе мебели, из-за которых люди теряют деньги»</b> — получите сразу после заявки.</div></div>
-        <form class="qform" id="quizForm">
-          <input class="inp" type="text" name="name" placeholder="Ваше имя" autocomplete="name">
-          <input class="inp" type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>
-          <input class="inp" type="email" name="email" placeholder="Email — куда прислать PDF-гид (необязательно)" autocomplete="email">
-          <label class="agree"><input type="checkbox" required> Даю согласие ИП Плаксеновой О. В. на обработку моих персональных данных (имя, телефон, e-mail) для связи по заявке и ознакомлен(а) с <a href="politika.html" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:inherit;text-decoration:underline">Политикой обработки персональных данных</a></label>
-          <button class="btn btn-blue" type="submit">Получить расчёт + PDF-гид</button>
-        </form>
-      </div>
-
-      <div class="qdone" id="qdone">
-        <div class="big">✅</div>
-        <h3>Заявка принята!</h3>
-        <p>Перезвоним в ближайшее время в рабочие часы (ежедневно 10:00–20:00), уточним детали и подготовим расчёт. А обещанный гид уже ваш:</p>
-        <a class="btn btn-blue" href="guide/7-oshibok-pri-zakaze-mebeli.pdf" download target="_blank" rel="noopener" style="margin-top:20px">📕 Открыть PDF-гид</a>
-        <p style="font-size:.78rem;color:var(--tx-mut-l);margin-top:10px">Откроется в новой вкладке — сохраните к себе или отправьте в «Файлы»</p>
-      </div>
-
-      <button class="qback" id="qback">← Назад</button>
     </div>
   </div>
 </section>
@@ -1076,7 +1067,7 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
 <!-- ======== STICKY CTA (мобильные) ======== -->
 <div class="stickybar" id="sticky">
   <a class="call" href="tel:+79044952700" aria-label="Позвонить">📞</a>
-  <a class="btn btn-blue" href="#quiz">Бесплатный замер</a>
+  <a class="btn btn-blue" href="#contacts">Бесплатный замер</a>
 </div>
 
 <!-- ======== COOKIE-БАННЕР ======== -->
@@ -1091,20 +1082,20 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
 <script>
 // шапка при скролле + sticky-бар
 var hdr = document.getElementById('hdr'), sticky = document.getElementById('sticky');
-// видимость квиза считаем через IntersectionObserver, чтобы НЕ дёргать
-// getBoundingClientRect на каждом скролле (это вызывало forced reflow)
-var quizVisible = false, footerVisible = false;
-// прячем sticky-бар, когда виден квиз ИЛИ футер — иначе бар перекрывал ссылку
-// «Политика конфиденциальности» внизу, и её нельзя было нажать
-function updateSticky(){ sticky.classList.toggle('show', scrollY > 500 && !quizVisible && !footerVisible); }
+// Видимость блоков считаем через IntersectionObserver, чтобы НЕ дёргать
+// getBoundingClientRect на каждом скролле (это вызывало forced reflow).
+// Прячем sticky-бар, когда видна форма записи или футер: иначе бар
+// перекрывал ссылку «Политика конфиденциальности», и её нельзя было нажать.
+var formVisible = false, footerVisible = false;
+function updateSticky(){ sticky.classList.toggle('show', scrollY > 500 && !formVisible && !footerVisible); }
 var io = new IntersectionObserver(function(es){
   es.forEach(function(e){
-    if(e.target.id === 'quiz') quizVisible = e.isIntersecting; else footerVisible = e.isIntersecting;
+    if(e.target.tagName === 'FOOTER') footerVisible = e.isIntersecting; else formVisible = e.isIntersecting;
   });
   updateSticky();
 }, {threshold:0});
-io.observe(document.getElementById('quiz'));
-io.observe(document.querySelector('footer'));
+[document.getElementById('contacts'), document.querySelector('footer')]
+  .forEach(function(el){ if(el) io.observe(el); });
 addEventListener('scroll', function(){
   hdr.classList.toggle('scrolled', scrollY > 30);
   updateSticky();
@@ -1137,31 +1128,6 @@ function countUp(box){
   });
 }
 
-// квиз
-var steps = [].slice.call(document.querySelectorAll('.qstep')),
-    bar = document.getElementById('qbar'),
-    count = document.getElementById('qcount'),
-    back = document.getElementById('qback'),
-    answers = {}, cur = 0;
-
-function showStep(i){
-  steps[cur].classList.remove('on');
-  cur = i;
-  steps[cur].classList.add('on');
-  bar.style.width = ((cur+1)/steps.length*100) + '%';
-  count.textContent = cur < steps.length-1 ? 'Вопрос ' + (cur+1) + ' из 4' : 'Последний шаг';
-  back.style.display = cur > 0 ? 'inline' : 'none';
-}
-document.querySelectorAll('.qopt').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    answers[steps[cur].dataset.key] = btn.dataset.val;
-    showStep(cur + 1);
-  });
-});
-back.addEventListener('click', function(){ if(cur > 0) showStep(cur - 1); });
-
-// Куда отправлять заявки. Заполнить после деплоя бэкенда (папка backend/).
-// Пока пусто — сайт работает как раньше, просто без отправки в MAX.
 // Адрес бэкенда определяется сам — править вручную не нужно:
 //   localhost      → локальный бэкенд (проверка на своём ПК)
 //   github.io      → пусто (тестовый стенд, бэкенда там нет — заявки не уходят)
@@ -1184,12 +1150,6 @@ function goThanks(){
   location.href = 'spasibo.html';
 }
 
-document.getElementById('quizForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  answers['Имя'] = this.name.value; answers['Телефон'] = this.phone.value; answers['Email'] = this.email.value; answers['Источник'] = 'квиз';
-  sendLead(answers);
-  goThanks();
-});
 document.getElementById('leadForm').addEventListener('submit', function(e){
   e.preventDefault();
   sendLead({'Имя': this.name.value, 'Телефон': this.phone.value, 'Источник': 'форма контактов'});
