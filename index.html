@@ -22,9 +22,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232B2A29'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%2373C8DD' text-anchor='middle'%3EП%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -106,7 +106,7 @@
   --lime:#8FC63D;         /* лаймовый акцент из фирменного буклета */
   --lime-soft:rgba(143,198,61,.14);
   --lime-line:rgba(143,198,61,.38);
-  --font-display:"Cormorant Garamond",Georgia,serif;
+  --font-display:"Onest","Manrope",system-ui,sans-serif;
   --font-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --r:22px;
   --shadow:0 18px 50px -18px rgba(43,42,41,.25);
@@ -120,12 +120,13 @@ a{color:inherit;text-decoration:none}
 ul{list-style:none}
 section{scroll-margin-top:84px}
 .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
-/* Заголовки — серифный Cormorant: у него мелкая x-height, поэтому кегль
-   крупнее, вес 600 и обычный трекинг (в отличие от прежнего жирного Nunito). */
-h1,h2{font-family:var(--font-display);font-weight:600;line-height:1.08;letter-spacing:-.005em}
-h3{font-weight:700;line-height:1.2;letter-spacing:-.01em}
-h1{font-size:clamp(2.6rem,6vw,4.4rem)}
-h2{font-size:clamp(2.1rem,4.6vw,3.4rem);margin-bottom:14px}
+/* Заголовки как в референсе: крупные и ЛЁГКИЕ (вес 300), геометрический
+   гротеск Onest. Иерархия строится размером и воздухом, а не жирностью —
+   именно жирный шрифт делал страницу «шаблонной». */
+h1,h2{font-family:var(--font-display);font-weight:300;line-height:1.05;letter-spacing:-.025em}
+h3{font-family:var(--font-display);font-weight:500;line-height:1.25;letter-spacing:-.015em}
+h1{font-size:clamp(2.4rem,6.4vw,4.6rem)}
+h2{font-size:clamp(2rem,4.4vw,3.3rem);margin-bottom:16px}
 .sub{font-size:1.06rem;max-width:640px}
 .accent{color:var(--blue)}
 .kicker{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
@@ -156,43 +157,50 @@ h2{font-size:clamp(2.1rem,4.6vw,3.4rem);margin-bottom:14px}
 /* ---------- шапка ---------- */
 header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,box-shadow .3s;padding:14px 0}
 header.scrolled{background:rgba(30,31,31,.86);backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,.35)}
-.hrow{display:flex;align-items:center;gap:28px}
-nav{display:flex;gap:24px;margin-left:auto}
-nav a{font-size:.92rem;font-weight:600;color:var(--tx-mut-l);transition:color .2s}
-nav a:hover{color:var(--blue)}
-.hphone{font-weight:800;font-size:1rem;white-space:nowrap}
-.hphone span{display:block;font-size:.7rem;font-weight:600;color:var(--tx-mut-l)}
-.hbtn{padding:12px 20px;font-size:.9rem}
+.hrow{display:flex;align-items:center;gap:20px}
+/* меню — «таблетки» по центру, как в референсе */
+nav{display:flex;gap:8px;margin:0 auto}
+nav a{font-size:.85rem;font-weight:500;color:rgba(255,255,255,.82);padding:9px 17px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);backdrop-filter:blur(8px);
+  white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+nav a:hover{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.hphone{font-weight:600;font-size:.92rem;white-space:nowrap}
+.hphone span{display:block;font-size:.68rem;font-weight:500;color:var(--tx-mut-l)}
+.hbtn{padding:11px 20px;font-size:.86rem;border-radius:999px}
 
-/* ---------- hero ---------- */
-.hero{position:relative;padding:150px 0 90px;background:
-  radial-gradient(700px 500px at 78% 18%,rgba(115,200,221,.16),transparent 60%),
-  radial-gradient(500px 400px at 8% 85%,rgba(115,200,221,.08),transparent 60%),
-  var(--ink-deep)}
-.hero::before{content:"";position:absolute;inset:0;background-image:
+/* ---------- hero: фото во весь экран, текст по центру (как в референсе) ---------- */
+.hero{position:relative;min-height:min(90vh,780px);display:grid;place-items:center;
+  padding:140px 0 80px;overflow:hidden;background:var(--ink-deep)}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-bg::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(to bottom,rgba(20,21,21,.60) 0%,rgba(20,21,21,.30) 42%,rgba(20,21,21,.80) 100%)}
+/* пока фото нет — мягкая сетка на тёмном, чтобы экран не был пустым */
+.hero.no-photo .hero-bg img{display:none}
+.hero.no-photo .hero-bg{background-image:
   linear-gradient(rgba(115,200,221,.05) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(115,200,221,.05) 1px,transparent 1px);
-  background-size:44px 44px;mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 75%)}
-.hgrid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
-/* Cormorant мельче Nunito при том же кегле — поднимаем размер, чтобы
-   первый экран звучал в полный голос и h1 был заметно крупнее h2 */
-.hero h1{font-size:clamp(2.8rem,6.2vw,4.6rem);margin-bottom:20px}
-.hero .sub{color:var(--tx-mut-l);margin-bottom:32px}
-.hcta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
-.chips{display:flex;gap:10px;flex-wrap:wrap}
-.chip{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;padding:9px 16px;border:1px solid var(--line-l);border-radius:999px;background:rgba(255,255,255,.04)}
-.chip b{color:var(--blue)}
+  linear-gradient(90deg,rgba(115,200,221,.05) 1px,transparent 1px);background-size:44px 44px}
+.hero-in{position:relative;text-align:center;max-width:940px;margin:0 auto;padding:0 20px}
+.hero h1{font-size:clamp(2.1rem,6.2vw,4.5rem);text-transform:uppercase;color:#fff;margin-bottom:12px}
+.hero .sub{color:rgba(255,255,255,.88);margin:0 auto 36px;max-width:640px;font-size:1.05rem}
+.hero .sub b{font-weight:600;color:var(--lime)}
+/* белая карточка заявки поверх фото */
+.hero-card{display:block;background:#fff;color:var(--tx-dark);border-radius:18px;padding:20px 22px;
+  max-width:430px;margin:0 auto;text-align:left;box-shadow:0 26px 60px -20px rgba(0,0,0,.55);
+  transition:transform .25s ease,box-shadow .25s ease}
+.hero-card:hover{transform:translateY(-3px);box-shadow:0 32px 70px -20px rgba(0,0,0,.6)}
+.hc-top{display:flex;align-items:center;justify-content:space-between;gap:16px;font-weight:600;font-size:1.04rem}
+.hc-plus{width:34px;height:34px;flex:0 0 34px;border-radius:50%;background:var(--lime);color:var(--ink);
+  display:grid;place-items:center;font-size:1.3rem;font-weight:500;line-height:1}
+.hero-card p{font-size:.86rem;line-height:1.5;color:var(--tx-mut-d);margin-top:14px;padding-top:14px;border-top:1px solid var(--line-d)}
+.chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;font-weight:500;padding:9px 16px;
+  border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.08);
+  backdrop-filter:blur(6px);color:#fff}
+.chip b{color:var(--lime);font-weight:600}
 .star{color:#FFC94A}
 
 /* чертёж */
-.blueprint{position:relative;animation:float 7s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-.blueprint svg{width:100%;height:auto;filter:drop-shadow(0 20px 50px rgba(115,200,221,.14))}
-.draw{stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 2.6s ease forwards}
-.draw.d1{animation-delay:.2s}.draw.d2{animation-delay:.6s}.draw.d3{animation-delay:1s}.draw.d4{animation-delay:1.4s}.draw.d5{animation-delay:1.8s}
-@keyframes draw{to{stroke-dashoffset:0}}
-.bp-note{position:absolute;right:6%;bottom:-52px;background:var(--blue);color:#0D2830;font-weight:800;font-size:.82rem;padding:10px 16px;border-radius:12px;box-shadow:var(--glow);animation:pulse 2.5s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 
 /* ---------- бегущая строка ---------- */
 .marquee{background:var(--blue);color:#0D2830;overflow:hidden;padding:13px 0;position:relative;z-index:2}
@@ -237,11 +245,6 @@ nav a:hover{color:var(--blue)}
 .cat:hover .go{color:#2E97B4}
 
 /* герой: показываем фото, а если файла ещё нет — анимированный чертёж */
-.hero-vis{position:relative}
-.hero-vis .blueprint{display:none}
-.hero-vis.no-photo .blueprint{display:block}
-.hero-vis.no-photo .ph{display:none}
-.hero-vis .ph{border-radius:var(--r);box-shadow:var(--shadow)}
 
 /* ---------- УНИВЕРСАЛЬНЫЙ СЛОТ ПОД ФОТО ----------
    Кладём фото в images/ с нужным именем — оно появится само.
@@ -264,6 +267,45 @@ nav a:hover{color:var(--blue)}
 .r-4x3 {aspect-ratio:4/3}
 .r-1x1 {aspect-ratio:1/1}
 .r-3x4 {aspect-ratio:3/4}
+
+/* клик по фото категории → страница работ с этой категорией */
+.cat-link{position:absolute;inset:0;z-index:2}
+.cat-photo,.cat-vis{position:relative}
+
+/* ---------- лаймовые акценты ----------
+   Лайм — «цвет действия и выгоды»: им подсвечиваем всё бесплатное,
+   цифры-выгоды и активные состояния. Бирюза остаётся фирменной базой. */
+.kicker::before{background:var(--lime)}
+.free{background:var(--lime)!important;color:var(--ink)!important;border-color:var(--lime)!important}
+.go:hover{color:var(--lime)}
+.go:hover i{transform:translateX(4px)}
+.faq summary::after{color:var(--lime)}
+.hero .sub b,.chip b{color:var(--lime)}
+.price{color:var(--lime)}
+/* вторая кнопка-призыв — лаймовая, чтобы разбавить бирюзу */
+.btn-lime{background:var(--lime);color:var(--ink);box-shadow:0 12px 34px -12px rgba(143,198,61,.6)}
+.btn-lime:hover{filter:brightness(1.06)}
+
+/* ---------- заголовок и фильтры работ (как в референсе) ---------- */
+.works-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.works-head h2{margin-bottom:0}
+.works-all{font-size:.92rem;font-weight:600;color:var(--tx-dark);display:inline-flex;align-items:center;gap:8px;
+  padding:12px 22px;border-radius:999px;border:1px solid var(--line-d);transition:background .2s,border-color .2s,color .2s}
+.works-all i{font-style:normal;transition:transform .2s}
+.works-all:hover{background:var(--lime);border-color:var(--lime)}
+.works-all:hover i{transform:translateX(3px)}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-top:30px}
+.filter{font-family:inherit;font-size:.87rem;font-weight:500;color:var(--tx-dark);cursor:pointer;
+  padding:11px 20px;border-radius:999px;border:1px solid var(--line-d);background:#fff;
+  transition:background .2s,color .2s,border-color .2s}
+.filter:hover{border-color:var(--ink)}
+.filter.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.gal .ph.hide{display:none}
+@media(max-width:640px){
+  .filters{gap:7px;margin-top:22px}
+  .filter{padding:9px 15px;font-size:.82rem}
+  .works-all{padding:10px 18px;font-size:.86rem}
+}
 
 /* ---------- галерея работ ---------- */
 .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
@@ -350,10 +392,18 @@ nav a:hover{color:var(--blue)}
 .why .n{font-family:var(--font-display);font-weight:900;font-size:2rem;color:var(--blue);line-height:1;opacity:.9}
 .why h3{font-size:1.08rem;margin-bottom:6px}
 .why p{font-size:.92rem;color:var(--tx-mut-l)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:54px;position:relative}
-.stat{text-align:center;padding:34px 24px;border:1px solid var(--line-l);border-radius:var(--r);background:rgba(255,255,255,.03)}
-.stat b{display:block;font-size:2.4rem;font-weight:800;color:var(--blue);line-height:1.1}
-.stat span{font-size:.85rem;color:var(--tx-mut-l)}
+/* Цифры как в референсе: огромные и ТОНКИЕ, подпись под разделителем */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:54px;position:relative}
+.stat{text-align:left;padding:34px 28px 28px;border-radius:20px;background:rgba(255,255,255,.05);
+  border:1px solid var(--line-l)}
+.stat b{display:block;font-family:var(--font-display);font-size:clamp(2.6rem,4.4vw,3.6rem);font-weight:300;
+  color:#fff;line-height:1;letter-spacing:-.03em;margin-bottom:22px}
+.stat span{display:block;font-size:.84rem;line-height:1.5;color:var(--tx-mut-l);
+  padding-top:16px;border-top:1px solid var(--line-l)}
+/* один акцент на лайме, чтобы блок не был монотонным */
+.stat:nth-child(2) b{color:var(--lime)}
+@media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.stats{grid-template-columns:1fr}}
 
 /* ---------- баннер замера ---------- */
 .banner{background:linear-gradient(120deg,var(--blue) 0%,#9BDCEB 100%);color:#0D2830;border-radius:calc(var(--r) + 6px);padding:46px 50px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;position:relative;overflow:hidden;box-shadow:var(--glow)}
@@ -470,8 +520,6 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
 
 /* ---------- адаптив ---------- */
 @media(max-width:960px){
-  .hgrid{grid-template-columns:1fr}
-  .blueprint{max-width:520px;margin:0 auto}
   .pains,.stats{grid-template-columns:repeat(2,1fr)}
   .pays{grid-template-columns:1fr}
   .cats{grid-template-columns:repeat(2,1fr)}
@@ -523,66 +571,25 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
 </header>
 
 <!-- ======== HERO ======== -->
-<section class="hero" id="top">
-  <div class="wrap hgrid">
-    <div>
-      <div class="kicker">Производство мебели на заказ · Тюмень</div>
-      <h1>Мебель на заказ точно под ваши размеры — <span class="accent">и под ваш бюджет</span></h1>
-      <p class="sub">Кухни, шкафы и гардеробные — производство в Тюмени. Приедем, замерим, сделаем 3D-проект и назовём точную цену — всё бесплатно, ещё до договора.</p>
-      <div class="hcta">
-        <a href="#contacts" class="btn btn-blue">Рассчитать стоимость мебели</a>
-        <a href="tel:+79044952700" class="btn btn-ghost">Позвонить</a>
-      </div>
-      <div class="chips">
-        <div class="chip"><span class="star">★</span> <b>4.9</b>&nbsp;— рейтинг на 2ГИС</div>
-        <div class="chip">На рынке Тюмени <b>с 2019 года</b></div>
-        <div class="chip">Замер и дизайн-проект — <b>0 ₽</b></div>
-      </div>
-    </div>
-    <div class="hero-vis">
-      <!-- Главное фото. Пока файла нет — показывается анимированный чертёж (ниже). -->
-      <figure class="ph r-4x3">
-        <img src="images/hero.jpg" alt="Кухня на заказ от студии «Перфекто» в интерьере тюменской квартиры"
-             onerror="this.closest('.hero-vis').classList.add('no-photo')">
-        <span class="ph-cap">Наша работа · Тюмень</span>
-      </figure>
-      <div class="blueprint" aria-hidden="true">
-      <svg viewBox="0 0 560 400" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <!-- верхние шкафы -->
-        <rect class="draw d1" x="45" y="50" width="105" height="72" rx="4" stroke="#73C8DD" stroke-width="2.5"/>
-        <rect class="draw d1" x="160" y="50" width="105" height="72" rx="4" stroke="#73C8DD" stroke-width="2.5"/>
-        <line class="draw d2" x1="97" y1="86" x2="97" y2="100" stroke="#fff" stroke-width="2" opacity=".7"/>
-        <line class="draw d2" x1="212" y1="86" x2="212" y2="100" stroke="#fff" stroke-width="2" opacity=".7"/>
-        <!-- вытяжка -->
-        <path class="draw d2" d="M310 50 h80 v30 l-14 42 h-52 l-14 -42 z" stroke="#fff" stroke-width="2.5" opacity=".85"/>
-        <rect class="draw d1" x="420" y="50" width="95" height="72" rx="4" stroke="#73C8DD" stroke-width="2.5"/>
-        <!-- столешница -->
-        <line class="draw d3" x1="35" y1="215" x2="525" y2="215" stroke="#73C8DD" stroke-width="4"/>
-        <!-- нижние шкафы -->
-        <rect class="draw d3" x="45" y="228" width="105" height="105" rx="4" stroke="#fff" stroke-width="2.5" opacity=".85"/>
-        <rect class="draw d3" x="160" y="228" width="105" height="105" rx="4" stroke="#fff" stroke-width="2.5" opacity=".85"/>
-        <line class="draw d4" x1="97" y1="252" x2="97" y2="270" stroke="#73C8DD" stroke-width="2.5"/>
-        <line class="draw d4" x1="212" y1="252" x2="212" y2="270" stroke="#73C8DD" stroke-width="2.5"/>
-        <!-- духовка -->
-        <rect class="draw d4" x="285" y="228" width="120" height="105" rx="4" stroke="#73C8DD" stroke-width="2.5"/>
-        <rect class="draw d4" x="300" y="255" width="90" height="62" rx="3" stroke="#fff" stroke-width="2" opacity=".7"/>
-        <line class="draw d4" x1="300" y1="242" x2="340" y2="242" stroke="#fff" stroke-width="2" opacity=".7"/>
-        <!-- конфорки -->
-        <circle class="draw d4" cx="315" cy="205" r="7" stroke="#fff" stroke-width="2" opacity=".8"/>
-        <circle class="draw d4" cx="345" cy="205" r="7" stroke="#fff" stroke-width="2" opacity=".8"/>
-        <circle class="draw d4" cx="375" cy="205" r="7" stroke="#fff" stroke-width="2" opacity=".8"/>
-        <!-- шкаф справа -->
-        <rect class="draw d3" x="420" y="228" width="95" height="105" rx="4" stroke="#fff" stroke-width="2.5" opacity=".85"/>
-        <line class="draw d4" x1="467" y1="252" x2="467" y2="270" stroke="#73C8DD" stroke-width="2.5"/>
-        <!-- размерная линия снизу -->
-        <line class="draw d5" x1="45" y1="370" x2="515" y2="370" stroke="#73C8DD" stroke-width="1.5" opacity=".8"/>
-        <path class="draw d5" d="M45 364 v12 M515 364 v12 M52 370 l8 -4 v8 z M508 370 l-8 -4 v8 z" stroke="#73C8DD" stroke-width="1.5" fill="#73C8DD" opacity=".8"/>
-        <text x="255" y="362" fill="#73C8DD" font-size="13" font-family="Manrope,sans-serif" letter-spacing="2" opacity=".9">ВАШИ РАЗМЕРЫ</text>
-        <!-- вертикальная размерная линия -->
-        <line class="draw d5" x1="545" y1="50" x2="545" y2="333" stroke="#73C8DD" stroke-width="1.5" opacity=".5" stroke-dasharray="6 6"/>
-      </svg>
-      <div class="bp-note">Проект и замер — 0 ₽</div>
-      </div>
+<section class="hero no-photo" id="top">
+  <div class="hero-bg">
+    <img src="images/hero.jpg" alt="Кухня на заказ от студии «Перфекто» в интерьере тюменской квартиры"
+         onerror="this.closest('.hero').classList.add('no-photo')"
+         onload="this.closest('.hero').classList.remove('no-photo')">
+  </div>
+  <div class="hero-in">
+    <h1>Мебель на заказ<br>по вашим размерам</h1>
+    <p class="sub">Кухни, шкафы и гардеробные — производство в Тюмени. Замер, 3D-проект и расчёт — <b>бесплатно</b>, ещё до договора.</p>
+
+    <a class="hero-card" href="#contacts">
+      <span class="hc-top">Заказать бесплатный замер <span class="hc-plus" aria-hidden="true">+</span></span>
+      <p>Оставьте заявку — приедем в удобное время, снимем размеры и рассчитаем стоимость вашей мебели.</p>
+    </a>
+
+    <div class="chips">
+      <div class="chip"><span class="star">★</span> <b>4.9</b>&nbsp;— рейтинг на 2ГИС</div>
+      <div class="chip">В Тюмени <b>с 2019 года</b></div>
+      <div class="chip">Гарантия <b>2 года</b></div>
     </div>
   </div>
 </section>
@@ -640,6 +647,8 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <div class="cat-photo">
           <img src="images/kitchen.jpg" alt="Кухня на заказ в Тюмени: светлые матовые фасады, рифлёные секции, встроенная техника и скрытая подсветка" loading="lazy" width="1448" height="1086">
           <span class="cat-tag">Наша работа · Тюмень</span>
+        
+          <a class="cat-link" href="raboty.html#kitchen" aria-label="Смотреть все работы: кухни"></a>
         </div>
         <div class="cat-body">
           <h3>Кухни на заказ</h3>
@@ -652,6 +661,8 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <div class="cat-photo">
           <img src="images/wardrobe.jpg" alt="Шкаф на заказ с зеркальными и рифлёными фасадами и чёрными ручками-профилями" loading="lazy" width="941" height="1672">
           <span class="cat-tag">Наша работа · Тюмень</span>
+        
+          <a class="cat-link" href="raboty.html#wardrobe" aria-label="Смотреть все работы: шкафы"></a>
         </div>
         <div class="cat-body">
           <h3>Шкафы</h3>
@@ -664,6 +675,8 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <div class="cat-photo">
           <img src="images/dressing-room.jpg" alt="Гардеробная комната на заказ в Тюмени: светлые фасады, зеркало с подсветкой, открытые полки, штанги и рифлёные ящики" loading="lazy" width="844" height="1500">
           <span class="cat-tag">Наша работа · Тюмень</span>
+        
+          <a class="cat-link" href="raboty.html#dressing" aria-label="Смотреть все работы: гардеробные"></a>
         </div>
         <div class="cat-body">
           <h3>Гардеробные</h3>
@@ -676,6 +689,8 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <div class="cat-photo">
           <img src="images/hallway.jpg" alt="Прихожая на заказ в Тюмени: встроенный шкаф с фисташковыми фасадами, рифлёные секции, скрытая подсветка и место для хранения" loading="lazy" width="1086" height="1448">
           <span class="cat-tag">Наша работа · Тюмень</span>
+        
+          <a class="cat-link" href="raboty.html#hallway" aria-label="Смотреть все работы: прихожие"></a>
         </div>
         <div class="cat-body">
           <h3>Прихожие</h3>
@@ -688,6 +703,8 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         <div class="cat-photo">
           <img src="images/kids-room.jpg" alt="Мебель для детской и подростковой комнаты на заказ в Тюмени: письменный стол, стеллаж с витринами и реечная перегородка" loading="lazy" width="1086" height="1448">
           <span class="cat-tag">Наша работа · Тюмень</span>
+        
+          <a class="cat-link" href="raboty.html#kids" aria-label="Смотреть все работы: детскую мебель"></a>
         </div>
         <div class="cat-body">
           <h3>Детская мебель</h3>
@@ -697,7 +714,9 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
         </div>
       </div>
       <div class="cat reveal" data-d="2">
-        <div class="cat-vis"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3zM6 12V5a2 2 0 0 1 2-2h1M12 19v2m-4 0h8"/></svg><small>Фото проекта — скоро</small></div>
+        <div class="cat-vis"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3zM6 12V5a2 2 0 0 1 2-2h1M12 19v2m-4 0h8"/></svg><small>Фото проекта — скоро</small>
+          <a class="cat-link" href="raboty.html#bath" aria-label="Смотреть все работы: мебель для ванной"></a>
+        </div>
         <div class="cat-body">
           <h3>Мебель для ванной</h3>
           <div class="price">Цена по договору</div>
@@ -719,24 +738,37 @@ body.ck-open .stickybar.show{transform:translateY(200%)}
      они появятся автоматически. Пока файла нет, слот показывает заглушку. -->
 <section class="light pad" id="works" style="padding-top:0">
   <div class="wrap">
-    <div class="kicker">Портфолио</div>
-    <h2>Наши работы в интерьерах<br>тюменских квартир и домов</h2>
-    <p class="sub">Это мебель, которую мы спроектировали, изготовили и собрали. Реальные объекты — не рендеры и не картинки из интернета.</p>
-    <div class="gal">
-      <figure class="ph r-1x1"><img src="images/work-01.jpg" alt="Кухня на заказ в интерьере, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-02.jpg" alt="Шкаф на заказ в спальню, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Шкаф</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-03.jpg" alt="Гардеробная на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Гардеробная</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-04.jpg" alt="Прихожая на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Прихожая</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-05.jpg" alt="Кухня с островом на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-06.jpg" alt="Детская мебель на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Детская</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-07.jpg" alt="Мебель для ванной на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Ванная</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-08.jpg" alt="Встроенный шкаф на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Шкаф</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-09.jpg" alt="Кухонный гарнитур на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-10.jpg" alt="Мебель для гостиной на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Гостиная</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-11.jpg" alt="Рабочее место и стеллаж на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кабинет</span></figure>
-      <figure class="ph r-1x1"><img src="images/work-12.jpg" alt="Мебель на заказ для квартиры под ключ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Квартира под ключ</span></figure>
+    <div class="works-head">
+      <div>
+        <div class="kicker">Портфолио</div>
+        <h2>Наши работы</h2>
+      </div>
+      <a class="works-all" href="raboty.html">Смотреть все проекты <i>→</i></a>
     </div>
-    <div class="gal-note">Хотите посмотреть больше? Покажем проекты, похожие на вашу задачу, прямо на замере.</div>
+    <div class="filters" id="workFilters">
+      <button class="filter on" type="button" data-f="all">Все работы</button>
+      <button class="filter" type="button" data-f="kitchen">Кухни</button>
+      <button class="filter" type="button" data-f="wardrobe">Шкафы</button>
+      <button class="filter" type="button" data-f="dressing">Гардеробные</button>
+      <button class="filter" type="button" data-f="hallway">Прихожие</button>
+      <button class="filter" type="button" data-f="kids">Детские</button>
+      <button class="filter" type="button" data-f="bath">Ванные</button>
+      <button class="filter" type="button" data-f="other">Другое</button>
+    </div>
+    <div class="gal" id="workGrid">
+      <figure class="ph r-1x1" data-cat="kitchen"><img src="images/work-01.jpg" alt="Кухня на заказ в интерьере, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
+      <figure class="ph r-1x1" data-cat="wardrobe"><img src="images/work-02.jpg" alt="Шкаф на заказ в спальню, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Шкаф</span></figure>
+      <figure class="ph r-1x1" data-cat="dressing"><img src="images/work-03.jpg" alt="Гардеробная на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Гардеробная</span></figure>
+      <figure class="ph r-1x1" data-cat="hallway"><img src="images/work-04.jpg" alt="Прихожая на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Прихожая</span></figure>
+      <figure class="ph r-1x1" data-cat="kitchen"><img src="images/work-05.jpg" alt="Кухня с островом на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
+      <figure class="ph r-1x1" data-cat="kids"><img src="images/work-06.jpg" alt="Детская мебель на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Детская</span></figure>
+      <figure class="ph r-1x1" data-cat="bath"><img src="images/work-07.jpg" alt="Мебель для ванной на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Ванная</span></figure>
+      <figure class="ph r-1x1" data-cat="wardrobe"><img src="images/work-08.jpg" alt="Встроенный шкаф на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Шкаф</span></figure>
+      <figure class="ph r-1x1" data-cat="kitchen"><img src="images/work-09.jpg" alt="Кухонный гарнитур на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кухня</span></figure>
+      <figure class="ph r-1x1" data-cat="other"><img src="images/work-10.jpg" alt="Мебель для гостиной на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Гостиная</span></figure>
+      <figure class="ph r-1x1" data-cat="other"><img src="images/work-11.jpg" alt="Рабочее место и стеллаж на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Кабинет</span></figure>
+      <figure class="ph r-1x1" data-cat="other"><img src="images/work-12.jpg" alt="Мебель на заказ для квартиры под ключ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"><span class="ph-cap">Квартира под ключ</span></figure>
+    </div>
   </div>
 </section>
 
@@ -1127,6 +1159,21 @@ function countUp(box){
     requestAnimationFrame(tick);
   });
 }
+
+// фильтры в «Наших работах»: показываем только выбранную категорию
+(function(){
+  var box = document.getElementById('workFilters'), grid = document.getElementById('workGrid');
+  if(!box || !grid) return;
+  box.addEventListener('click', function(e){
+    var btn = e.target.closest('.filter');
+    if(!btn) return;
+    box.querySelectorAll('.filter').forEach(function(b){ b.classList.toggle('on', b === btn); });
+    var f = btn.dataset.f;
+    grid.querySelectorAll('.ph').forEach(function(t){
+      t.classList.toggle('hide', f !== 'all' && t.dataset.cat !== f);
+    });
+  });
+})();
 
 // Адрес бэкенда определяется сам — править вручную не нужно:
 //   localhost      → локальный бэкенд (проверка на своём ПК)
