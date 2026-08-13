@@ -144,10 +144,8 @@ h2{font-size:clamp(2rem,4.4vw,3.3rem);margin-bottom:16px}
 .btn-dark:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
 
 /* ---------- логотип ---------- */
-/* Логотип: выравниваем по левому краю и подгоняем подпись под ширину
-   слова «Перфекто» — раньше align-items:center растягивал подпись шире
-   названия, и она выглядела съехавшей. */
-.logo{display:inline-flex;flex-direction:column;align-items:flex-start;gap:3px;line-height:1}
+/* Логотип: «Перфекто» по центру над строкой «студия мебельных решений» */
+.logo{display:inline-flex;flex-direction:column;align-items:center;gap:3px;line-height:1}
 .logo b{font-family:var(--font-display);font-weight:600;font-size:1.5rem;letter-spacing:-.02em;color:var(--white);white-space:nowrap}
 .logo b i{font-style:normal;color:var(--blue)}
 .logo small{font-size:.53rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
@@ -260,7 +258,10 @@ nav a:hover{background:var(--lime);border-color:var(--lime);color:var(--ink)}
 .ph:hover img{transform:scale(1.05)}
 .ph .ph-cap{position:absolute;left:12px;bottom:12px;z-index:1;background:rgba(30,31,31,.72);backdrop-filter:blur(8px);
   color:#fff;font-size:.74rem;font-weight:700;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.16)}
-.ph.is-empty{display:grid;place-items:center;border:1.5px dashed var(--blue-line);background:transparent}
+/* Слот без фото не показываем: пунктирная рамка выглядит недоделкой.
+   Как только файл появится в images/ — фото отрисуется само. */
+.ph.is-empty{display:none}
+.ph.is-empty--show{display:grid;place-items:center;border:1.5px dashed var(--blue-line);background:transparent}
 .ph.is-empty img,.ph.is-empty .ph-cap{display:none}
 .ph.is-empty::after{content:attr(data-empty);color:var(--tx-mut-l);font-size:.78rem;font-weight:600;
   text-align:center;padding:14px;line-height:1.45}
