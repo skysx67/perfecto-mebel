@@ -3,6 +3,12 @@ const assert = require('node:assert/strict');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright-core');
 const base = process.env.SITE_URL || 'http://127.0.0.1:8080';
 
+async function checkMenuCenter(page) {
+  const offset = await page.locator('#site-nav > a').evaluateAll(links =>
+    (links[0].getBoundingClientRect().left + links.at(-1).getBoundingClientRect().right) / 2 - innerWidth / 2);
+  assert.ok(Math.abs(offset) < 1, 'Desktop menu is off-center by ' + offset + 'px');
+}
+
 (async () => {
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
@@ -40,16 +46,19 @@ const base = process.env.SITE_URL || 'http://127.0.0.1:8080';
         await page.locator('#site-nav > a[href="#catalog"]').click();
         assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false');
       } else {
-        const items = await page.locator('.site-header .hrow > .logo, .site-header nav, .site-header .hrow > .hphone, .site-header .hrow > .hbtn').evaluateAll(elements => elements.map(e => {
+        await checkMenuCenter(page);
+        const items = await page.locator('.site-header .hrow > .logo, .site-header nav, .site-header .header-actions').evaluateAll(elements => elements.map(e => {
           const r = e.getBoundingClientRect(); return { left: r.left, right: r.right, scroll: e.scrollWidth, width: e.clientWidth };
         }));
         for (let i = 1; i < items.length; i++) assert.ok(items[i].left >= items[i - 1].right, 'Header items overlap');
         for (const item of items) assert.ok(item.scroll <= item.width + 1, 'Header content is clipped');
       }
       await page.locator('.cat .go').first().click();
-      await page.waitForURL('**/raboty.html#kitchen');
+      await page.waitForURL(url => url.pathname.endsWith('/raboty.html') && url.hash === '#kitchen');
       assert.equal(await page.locator('#category-title').innerText(), 'Кухни');
       assert.equal(await page.locator('.card:visible').count(), 3);
+      assert.equal(await page.locator('.cta .btn-lime').innerText(), 'Записаться на встречу');
+      if (!mobile) await checkMenuCenter(page);
       console.log('PASS home → kitchens, width ' + width);
     }
 
@@ -69,9 +78,9 @@ const base = process.env.SITE_URL || 'http://127.0.0.1:8080';
       console.log('PASS category + keyboard photo viewer: ' + category);
     }
     await page.locator('[data-f="kitchen"]').click();
-    await page.waitForURL('**/raboty.html#kitchen');
+    await page.waitForURL(url => url.pathname.endsWith('/raboty.html') && url.hash === '#kitchen');
     await page.locator('[data-f="wardrobe"]').click();
-    await page.waitForURL('**/raboty.html#wardrobe');
+    await page.waitForURL(url => url.pathname.endsWith('/raboty.html') && url.hash === '#wardrobe');
     await page.goBack();
     assert.equal(await page.locator('#category-title').innerText(), 'Кухни');
     await page.goto(base + '/raboty.html#unknown');
