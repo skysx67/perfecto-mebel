@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Наши работы — мебель на заказ в Тюмени | Перфекто</title>
-<meta name="description" content="Портфолио студии «Перфекто»: кухни, шкафы, гардеробные, прихожие и детская мебель на заказ в Тюмени. Реальные проекты, которые мы спроектировали, изготовили и собрали.">
+<title>Каталог мебели на заказ в Тюмени | Перфекто</title>
+<meta name="description" content="Каталог студии «Перфекто»: кухни, шкафы, гардеробные, прихожие и детская мебель на заказ в Тюмени. Реальные проекты, которые мы спроектировали, изготовили и собрали.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232B2A29'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%2373C8DD' text-anchor='middle'%3E%D0%9F%3C/text%3E%3C/svg%3E">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
@@ -48,19 +48,8 @@ h1{font-size:clamp(2.2rem,5.6vw,4rem)}
 /* шапка */
 header{position:sticky;top:0;z-index:50;background:rgba(247,244,239,.9);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line-d)}
-.hrow{display:flex;align-items:center;gap:20px;padding:14px 0}
-.logo b{font-family:var(--font-display);font-weight:600;font-size:1.35rem;color:var(--ink);letter-spacing:-.02em}
-.logo b i{color:var(--blue);font-style:normal}
-.logo small{display:block;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--tx-mut-d);margin-top:2px}
-.back{margin-left:auto;font-size:.86rem;font-weight:500;padding:10px 18px;border-radius:999px;
-  border:1px solid var(--line-d);transition:background .2s,border-color .2s}
-.back:hover{background:var(--lime);border-color:var(--lime)}
-.hcall{background:var(--ink);color:#fff;font-size:.86rem;font-weight:500;padding:11px 20px;border-radius:999px;
-  transition:background .2s}
-.hcall:hover{background:var(--lime);color:var(--ink)}
-
 /* верх страницы */
-.top{padding:60px 0 10px}
+.top{padding:60px 20px 10px}
 .crumbs{font-size:.84rem;color:var(--tx-mut-d);margin-bottom:20px}
 .crumbs a:hover{color:var(--ink)}
 .top .lead{font-size:1.06rem;color:var(--tx-mut-d);max-width:620px;margin-top:18px}
@@ -73,33 +62,24 @@ header{position:sticky;top:0;z-index:50;background:rgba(247,244,239,.9);backdrop
 .filter:hover{border-color:var(--ink)}
 .filter.on{background:var(--ink);border-color:var(--ink);color:#fff}
 
-/* мозаика работ */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:34px 0 10px}
-.card{position:relative;overflow:hidden;border-radius:20px;background:#e6e0d8;aspect-ratio:1/1;display:block}
-.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
-.card:hover img{transform:scale(1.05)}
-.card::after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .3s;
-  background:linear-gradient(to top,rgba(24,25,25,.75),transparent 55%)}
-.card:hover::after{opacity:1}
-.card .cap{position:absolute;left:16px;bottom:14px;z-index:1;color:#fff;font-weight:600;font-size:.95rem;
-  opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
-.card:hover .cap{opacity:1;transform:none}
-.card.is-empty{display:grid;place-items:center;border:1.5px dashed var(--line-d);background:transparent}
-.card.is-empty img,.card.is-empty .cap{display:none}
-.card.is-empty::before{content:attr(data-empty);color:var(--tx-mut-d);font-size:.8rem;font-weight:500;text-align:center;padding:12px}
-/* мозаика: часть плиток крупнее — сетка не выглядит однообразной */
-.card.wide{grid-column:span 2;aspect-ratio:2/1}
-.card.tall{grid-row:span 2;aspect-ratio:1/2}
-.card.hide{display:none}
-@media(max-width:960px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .card.tall{grid-row:auto;aspect-ratio:1/1}
-  .card.wide{grid-column:span 2;aspect-ratio:2/1}
-}
-@media(max-width:560px){
-  .grid{gap:10px}
-  .card.wide{aspect-ratio:1/1}
-}
+/* Фотографии без группировки по заказам. */
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;padding:28px 0 10px}
+.card{position:relative;grid-column:span 4;min-width:0;margin:0;overflow:hidden;border-radius:20px;background:#e6e0d8;aspect-ratio:4/3}
+.card.hide,.card.is-empty{display:none}
+.photo-open{display:block;width:100%;height:100%;padding:0;border:0;cursor:zoom-in;background:transparent;color:#fff;text-align:left;font:inherit}
+.photo-open img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.photo-open:hover img{transform:scale(1.04)}
+.photo-caption{position:absolute;inset:auto 0 0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:34px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:.9rem;font-weight:600;pointer-events:none}
+.photo-caption span:last-child{font-size:1.2rem}
+.photo-open:focus-visible{outline-offset:-5px}
+.photo-dialog{position:fixed;inset:0;margin:auto;border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:58px 18px 18px;background:#1E1F1F;color:#fff;width:min(1100px,calc(100% - 24px));max-height:calc(100dvh - 24px)}
+.photo-dialog::backdrop{background:rgba(0,0,0,.85)}
+.photo-dialog img{display:block;margin:auto;max-width:100%;max-height:calc(100dvh - 150px);object-fit:contain}
+.photo-dialog p{margin-top:12px;text-align:center;font-size:.9rem}
+.photo-close{position:absolute;right:12px;top:10px;min-width:44px;min-height:44px;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:transparent;color:#fff;font-size:1.5rem;cursor:pointer}
+body:has(.photo-dialog[open]){overflow:hidden}
+@media(max-width:960px){.card{grid-column:span 6}}
+@media(max-width:560px){.grid{gap:16px}.card{grid-column:span 12}.top{padding-top:34px}}
 
 /* призыв внизу */
 .cta{margin:70px 0 80px;background:var(--ink);border-radius:26px;padding:clamp(34px,5vw,60px);
@@ -117,27 +97,38 @@ footer{border-top:1px solid var(--line-d);padding:28px 0 40px;font-size:.85rem;c
 .frow{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 footer a:hover{color:var(--ink)}
 </style>
+<link rel="stylesheet" href="site-header.css">
+<script src="site-header.js" defer></script>
 </head>
 <body>
 
-<header>
+<header id="hdr" class="site-header site-header--light">
   <div class="wrap hrow">
-    <a href="index.html" class="logo" aria-label="Перфекто — на главную">
+    <a href="index.html#top" class="logo" aria-label="Перфекто — на главную">
       <b>Пер<i>фекто</i></b>
       <small>студия мебельных решений</small>
     </a>
-    <a class="back" href="index.html">← На главную</a>
-    <a class="hcall" href="tel:+79044952700">+7 904 495-27-00</a>
+    <a class="mobile-call" href="tel:+79044952700" aria-label="Позвонить в Перфекто"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a15 15 0 0 1-7-7l2-2-2-5Z"/></svg></a>
+    <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Открыть меню"><span></span><span></span><span></span></button>
+    <nav id="site-nav" aria-label="Основная навигация">
+      <a href="index.html#catalog">Каталог</a>
+      <a href="index.html#steps">Как мы работаем</a>
+      <a href="index.html#reviews">Отзывы</a>
+      <a href="index.html#contacts">Контакты</a>
+      <div class="menu-contact"><span>Широтная, 209 · 2 этаж<br>Ежедневно 10:00–20:00 · по записи</span><a href="index.html#contacts">Записаться на встречу</a></div>
+    </nav>
+    <a class="hphone" href="tel:+79044952700">+7 904 495-27-00<span>ежедневно 10:00–20:00</span></a>
+    <a href="index.html#contacts" class="btn btn-blue hbtn">Записаться на встречу</a>
   </div>
 </header>
 
 <div class="wrap top">
-  <div class="crumbs"><a href="index.html">Главная</a> · Наши работы</div>
-  <h1>Наши работы</h1>
-  <p class="lead">Проекты, которые мы спроектировали, изготовили на своём производстве в Тюмени и собрали у клиентов. Реальные объекты — не рендеры и не картинки из интернета.</p>
+  <div class="crumbs"><a href="index.html">Главная</a> · <a href="raboty.html">Каталог</a><span id="category-crumb"></span></div>
+  <h1 id="category-title">Каталог мебели</h1>
+  <p class="lead">Выберите категорию и посмотрите фотографии мебели. Нажмите на снимок, чтобы рассмотреть его целиком.</p>
 
   <div class="filters" id="filters">
-    <button class="filter on" type="button" data-f="all">Все работы</button>
+    <button class="filter on" type="button" data-f="all">Весь каталог</button>
     <button class="filter" type="button" data-f="kitchen">Кухни</button>
     <button class="filter" type="button" data-f="wardrobe">Шкафы</button>
     <button class="filter" type="button" data-f="dressing">Гардеробные</button>
@@ -147,34 +138,33 @@ footer a:hover{color:var(--ink)}
     <button class="filter" type="button" data-f="other">Другое</button>
   </div>
 
-  <div class="grid" id="grid">
-    <figure class="card wide" data-cat="kitchen" data-empty="Фото — скоро"><img src="images/kitchen.jpg" alt="Кухня на заказ в Тюмени: светлые матовые фасады, встроенная техника" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Кухня · Тюмень</figcaption></figure>
-    <figure class="card tall" data-cat="wardrobe" data-empty="Фото — скоро"><img src="images/wardrobe.jpg" alt="Шкаф на заказ с зеркальными и рифлёными фасадами" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Шкаф</figcaption></figure>
-    <figure class="card" data-cat="dressing" data-empty="Фото — скоро"><img src="images/dressing-room.jpg" alt="Гардеробная комната на заказ в Тюмени" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Гардеробная</figcaption></figure>
-    <figure class="card" data-cat="hallway" data-empty="Фото — скоро"><img src="images/hallway.jpg" alt="Прихожая на заказ в Тюмени со встроенным шкафом" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Прихожая</figcaption></figure>
-    <figure class="card" data-cat="kids" data-empty="Фото — скоро"><img src="images/kids-room.jpg" alt="Мебель для детской комнаты на заказ в Тюмени" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Детская</figcaption></figure>
-    <figure class="card" data-cat="bath" data-empty="Фото ванной — скоро"><img src="images/bathroom.jpg" alt="Мебель для ванной на заказ в Тюмени" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Ванная</figcaption></figure>
-    <figure class="card" data-cat="kitchen" data-empty="Фото — скоро"><img src="images/work-01.jpg" alt="Кухня на заказ в интерьере, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Кухня</figcaption></figure>
-    <figure class="card" data-cat="wardrobe" data-empty="Фото — скоро"><img src="images/work-02.jpg" alt="Шкаф на заказ в спальню, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Шкаф</figcaption></figure>
-    <figure class="card wide" data-cat="dressing" data-empty="Фото — скоро"><img src="images/work-03.jpg" alt="Гардеробная на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Гардеробная</figcaption></figure>
-    <figure class="card" data-cat="hallway" data-empty="Фото — скоро"><img src="images/work-04.jpg" alt="Прихожая на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Прихожая</figcaption></figure>
-    <figure class="card" data-cat="kitchen" data-empty="Фото — скоро"><img src="images/work-05.jpg" alt="Кухня с островом на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Кухня с островом</figcaption></figure>
-    <figure class="card" data-cat="kids" data-empty="Фото — скоро"><img src="images/work-06.jpg" alt="Детская мебель на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Детская</figcaption></figure>
-    <figure class="card" data-cat="bath" data-empty="Фото — скоро"><img src="images/work-07.jpg" alt="Мебель для ванной на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Ванная</figcaption></figure>
-    <figure class="card tall" data-cat="wardrobe" data-empty="Фото — скоро"><img src="images/work-08.jpg" alt="Встроенный шкаф на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Встроенный шкаф</figcaption></figure>
-    <figure class="card" data-cat="kitchen" data-empty="Фото — скоро"><img src="images/work-09.jpg" alt="Кухонный гарнитур на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Кухня</figcaption></figure>
-    <figure class="card" data-cat="other" data-empty="Фото — скоро"><img src="images/work-10.jpg" alt="Мебель для гостиной на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Гостиная</figcaption></figure>
-    <figure class="card" data-cat="other" data-empty="Фото — скоро"><img src="images/work-11.jpg" alt="Рабочее место и стеллаж на заказ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Кабинет</figcaption></figure>
-    <figure class="card wide" data-cat="other" data-empty="Фото — скоро"><img src="images/work-12.jpg" alt="Мебель на заказ для квартиры под ключ, Тюмень" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"><figcaption class="cap">Квартира под ключ</figcaption></figure>
+  <div class="grid" id="grid" aria-label="Фотографии мебели">
+    <figure class="card" data-cat="kitchen"><button class="photo-open" type="button" aria-label="Увеличить фото: Кухня"><img src="images/work-01.jpg" alt="Кухня на заказ в интерьере, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Кухня</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="wardrobe"><button class="photo-open" type="button" aria-label="Увеличить фото: Шкаф"><img src="images/wardrobe.jpg" alt="Шкаф на заказ с зеркальными и рифлёными фасадами" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Шкаф</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="dressing"><button class="photo-open" type="button" aria-label="Увеличить фото: Гардеробная"><img src="images/dressing-room.jpg" alt="Гардеробная комната на заказ в Тюмени" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Гардеробная</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="hallway"><button class="photo-open" type="button" aria-label="Увеличить фото: Прихожая"><img src="images/hallway.jpg" alt="Прихожая на заказ в Тюмени со встроенным шкафом" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Прихожая</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="kids"><button class="photo-open" type="button" aria-label="Увеличить фото: Детская"><img src="images/kids-room.jpg" alt="Мебель для детской комнаты на заказ в Тюмени" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Детская</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="bath"><button class="photo-open" type="button" aria-label="Увеличить фото: Ванная"><img src="images/bathroom.jpg" alt="Мебель для ванной на заказ в Тюмени" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Ванная</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="wardrobe"><button class="photo-open" type="button" aria-label="Увеличить фото: Шкаф"><img src="images/work-02.jpg" alt="Шкаф на заказ в спальню, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Шкаф</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="dressing"><button class="photo-open" type="button" aria-label="Увеличить фото: Гардеробная"><img src="images/work-03.jpg" alt="Гардеробная на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Гардеробная</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="hallway"><button class="photo-open" type="button" aria-label="Увеличить фото: Прихожая"><img src="images/work-04.jpg" alt="Прихожая на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Прихожая</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="kitchen"><button class="photo-open" type="button" aria-label="Увеличить фото: Кухня с островом"><img src="images/work-05.jpg" alt="Кухня с островом на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Кухня с островом</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="kids"><button class="photo-open" type="button" aria-label="Увеличить фото: Детская"><img src="images/work-06.jpg" alt="Детская мебель на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Детская</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="bath"><button class="photo-open" type="button" aria-label="Увеличить фото: Ванная"><img src="images/work-07.jpg" alt="Мебель для ванной на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Ванная</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="wardrobe"><button class="photo-open" type="button" aria-label="Увеличить фото: Встроенный шкаф"><img src="images/work-08.jpg" alt="Встроенный шкаф на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Встроенный шкаф</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="kitchen"><button class="photo-open" type="button" aria-label="Увеличить фото: Кухня"><img src="images/work-09.jpg" alt="Кухонный гарнитур на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Кухня</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="other"><button class="photo-open" type="button" aria-label="Увеличить фото: Гостиная"><img src="images/work-10.jpg" alt="Мебель для гостиной на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Гостиная</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="other"><button class="photo-open" type="button" aria-label="Увеличить фото: Кабинет"><img src="images/work-11.jpg" alt="Рабочее место и стеллаж на заказ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Кабинет</span><span aria-hidden="true">↗</span></span></button></figure>
+    <figure class="card" data-cat="other"><button class="photo-open" type="button" aria-label="Увеличить фото: Квартира под ключ"><img src="images/work-12.jpg" alt="Мебель на заказ для квартиры под ключ, Тюмень" loading="lazy" onerror="this.closest('.card').classList.add('is-empty')"><span class="photo-caption"><span>Квартира под ключ</span><span aria-hidden="true">↗</span></span></button></figure>
   </div>
 
   <section class="cta">
     <div>
       <h2>Хотите так же?</h2>
-      <p>Приедем, снимем размеры и покажем ваш проект в 3D — бесплатно, ещё до договора.</p>
+      <p>Приезжайте в студию на Широтной, 209: покажем материалы, цвета и фурнитуру, обсудим вашу будущую мебель.</p>
     </div>
     <div class="btns">
-      <a class="btn btn-lime" href="index.html#contacts">Записаться на замер</a>
+      <a class="btn btn-lime" href="index.html#contacts">Записаться на встречу</a>
       <a class="btn btn-ghost" href="tel:+79044952700">Позвонить</a>
     </div>
   </section>
@@ -187,21 +177,40 @@ footer a:hover{color:var(--ink)}
   </div>
 </footer>
 
+<dialog class="photo-dialog" id="photo-dialog" aria-labelledby="photo-title">
+  <button class="photo-close" type="button" aria-label="Закрыть фотографию">×</button>
+  <img id="photo-full" alt="">
+  <p id="photo-title"></p>
+</dialog>
+
 <script>
-// фильтр категорий + поддержка ссылки вида raboty.html#kitchen
+// Категория отражается в адресе: работают прямые ссылки и кнопка «Назад».
 (function(){
   var box=document.getElementById('filters'), grid=document.getElementById('grid');
-  function apply(f){
-    box.querySelectorAll('.filter').forEach(function(b){ b.classList.toggle('on', b.dataset.f===f); });
-    grid.querySelectorAll('.card').forEach(function(c){
-      c.classList.toggle('hide', f!=='all' && c.dataset.cat!==f);
-    });
+  var buttons=Array.from(box.querySelectorAll('.filter'));
+  function apply(){
+    var key=location.hash.slice(1), active=buttons.find(function(b){return b.dataset.f===key;}) || buttons[0];
+    var f=active.dataset.f;
+    buttons.forEach(function(b){b.classList.toggle('on',b===active);b.setAttribute('aria-pressed',String(b===active));});
+    grid.querySelectorAll('.card').forEach(function(c){c.classList.toggle('hide',f!=='all'&&c.dataset.cat!==f);});
+    var title=f==='all'?'Каталог мебели':active.textContent;
+    document.getElementById('category-title').textContent=title;
+    document.getElementById('category-crumb').textContent=f==='all'?'':' · '+title;
+    document.title=title+' на заказ в Тюмени | Перфекто';
   }
-  box.addEventListener('click', function(e){
-    var b=e.target.closest('.filter'); if(b) apply(b.dataset.f);
+  box.addEventListener('click',function(e){var b=e.target.closest('.filter');if(b) location.hash=b.dataset.f;});
+  addEventListener('hashchange',apply);
+  apply();
+  var dialog=document.getElementById('photo-dialog'), full=document.getElementById('photo-full');
+  grid.addEventListener('click',function(e){
+    var button=e.target.closest('.photo-open');if(!button) return;
+    var img=button.querySelector('img');
+    full.src=img.src;full.alt=img.alt;
+    document.getElementById('photo-title').textContent=button.querySelector('.photo-caption span').textContent;
+    dialog.showModal();
   });
-  var h=(location.hash||'').replace('#','');
-  if(h && box.querySelector('[data-f="'+h+'"]')) apply(h);
+  dialog.querySelector('.photo-close').addEventListener('click',function(){dialog.close();});
+  dialog.addEventListener('click',function(e){if(e.target===dialog) dialog.close();});
 })();
 </script>
 </body>
