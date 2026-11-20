@@ -9,9 +9,45 @@ async function checkMenuCenter(page) {
   assert.ok(Math.abs(offset) < 1, 'Desktop menu is off-center by ' + offset + 'px');
 }
 
+async function checkMobileToolbar(browser) {
+  const page = await browser.newPage({ isMobile: true, hasTouch: true });
+  try {
+    await page.addInitScript(() => localStorage.setItem('perfecto_cookie', 'no'));
+    const cdp = await page.context().newCDPSession(page);
+    for (const [width, height, difference] of [[320, 568, 64], [393, 795, 100], [430, 850, 120], [740, 400, 40]]) {
+      await page.setViewportSize({ width, height });
+      await page.goto(base + '/index.html');
+      // Simulate browser chrome while leaving the area behind it visible.
+      await cdp.send('Emulation.setSmallViewportHeightDifferenceOverride', { difference });
+      await page.evaluate(() => {
+        const probe = document.createElement('div');
+        probe.id = 'viewport-probe';
+        probe.style.cssText = 'position:absolute;height:100svh;width:100lvh;visibility:hidden;pointer-events:none';
+        document.body.append(probe);
+      });
+      await page.waitForFunction(difference => {
+        const probe = document.getElementById('viewport-probe');
+        return probe.offsetWidth - probe.offsetHeight === difference;
+      }, difference, { timeout: 5000 });
+      await page.locator('#viewport-probe').evaluate(probe => probe.remove());
+      await page.evaluate(() => document.fonts.ready);
+      const marquee = await page.locator('.marquee').boundingBox();
+      const content = await page.locator('.hero-in').boundingBox();
+      assert.ok(marquee.y >= height - 1, `Marquee shows behind the toolbar at ${width}×${height}`);
+      assert.ok(content.y + content.height <= height - difference, 'Toolbar covers hero content');
+      await page.evaluate(top => window.scrollTo({ top, behavior: 'instant' }), difference + 60);
+      assert.ok((await page.locator('.marquee').boundingBox()).y < height - difference, 'Marquee must appear after scrolling');
+      console.log(`PASS mobile toolbar at ${width}×${height}`);
+    }
+  } finally {
+    await page.close();
+  }
+}
+
 (async () => {
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
+    await checkMobileToolbar(browser);
     const page = await browser.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));

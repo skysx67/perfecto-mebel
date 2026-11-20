@@ -158,8 +158,10 @@ h2{font-size:clamp(2rem,4.4vw,3.3rem);margin-bottom:16px}
 header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,box-shadow .3s;padding:14px 0}
 header.scrolled{background:rgba(30,31,31,.86);backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,.35)}
 /* ---------- hero: фото во весь экран, текст по центру (как в референсе) ---------- */
-.hero{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;
-  padding:104px 0 40px;overflow:hidden;background:var(--ink-deep)}
+.hero{--hero-bottom:40px;position:relative;min-height:100vh;min-height:100lvh;display:grid;place-items:center;
+  padding:104px 0 var(--hero-bottom);overflow:hidden;background:var(--ink-deep);
+  /* Фото продолжается под панелью браузера, а текст центрируется над ней. */
+  padding-bottom:calc(var(--hero-bottom) + 100lvh - 100svh)}
 .hero-bg{position:absolute;inset:0}
 .hero-bg img{width:100%;height:100%;object-fit:cover}
 .hero-bg::after{content:"";position:absolute;inset:0;background:
@@ -332,13 +334,6 @@ body:has(.photo-dialog[open]){overflow:hidden}
 .stat:nth-child(2) b{color:var(--lime)}
 @media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:460px){.stats{grid-template-columns:1fr}}
-@media(max-height:500px){
-  .hero{padding:88px 0 20px}
-  .hero h1{font-size:clamp(1.65rem,7.8vh,3rem)}
-  .hero .sub{font-size:.95rem}
-  .hero .chips{margin-top:14px}
-  .hero .chip{padding:5px 10px}
-}
 
 /* ---------- баннер замера ---------- */
 .banner{background:linear-gradient(120deg,var(--blue) 0%,#9BDCEB 100%);color:#0D2830;border-radius:calc(var(--r) + 6px);padding:46px 50px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;position:relative;overflow:hidden;box-shadow:var(--glow)}
@@ -465,7 +460,7 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
 }
 @media(max-width:640px){
   .pad{padding:64px 0}
-  .hero{padding:92px 0 32px}
+  .hero{--hero-bottom:32px;padding-top:92px}
   .pains,.steps,.revs{grid-template-columns:1fr}
   .banner{padding:32px 26px}
   .stickybar{display:flex}
@@ -476,11 +471,18 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
 }
 @media(max-width:460px){.stats{grid-template-columns:1fr}}
 @media(max-height:500px){
-  .hero{padding:88px 0 20px}
+  .hero{--hero-bottom:20px;padding-top:88px}
   .hero h1{font-size:clamp(1.65rem,7.8vh,3rem)}
   .hero .sub{font-size:.95rem}
   .hero .chips{margin-top:14px}
   .hero .chip{padding:5px 10px}
+}
+@media(max-width:360px){
+  .hero-in{padding-inline:12px}
+  .hero h1{font-size:1.65rem}
+  .hero .sub{font-size:.95rem}
+  .hero .chips{gap:8px;margin-top:16px}
+  .hero .chip{padding:7px 10px}
 }
 </style>
 <link rel="stylesheet" href="site-header.css?v=20261120">
