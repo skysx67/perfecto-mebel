@@ -44,9 +44,35 @@ async function checkMobileToolbar(browser) {
   }
 }
 
+async function checkShortBrowserViewport(browser) {
+  // Some in-app browsers report a shorter CSS viewport than the area they paint.
+  for (const [width, height, screenWidth, screenHeight] of [
+    [320, 504, 320, 568], [393, 695, 393, 852], [440, 792, 440, 956], [760, 340, 852, 393],
+  ]) {
+    const page = await browser.newPage({
+      viewport: { width, height }, screen: { width: screenWidth, height: screenHeight }, isMobile: true, hasTouch: true,
+    });
+    try {
+      await page.addInitScript(() => localStorage.setItem('perfecto_cookie', 'no'));
+      await page.goto(base + '/index.html');
+      await page.evaluate(() => document.fonts.ready);
+      const marquee = page.locator('.marquee');
+      assert.ok((await marquee.boundingBox()).y >= screenHeight - 1, `Marquee reaches the toolbar on a ${screenWidth}×${screenHeight} display`);
+      const content = await page.locator('.hero-in').boundingBox();
+      assert.ok(content.y + content.height <= height, 'First-screen text should fit in the browser viewport');
+      await page.evaluate(top => window.scrollTo({ top, behavior: 'instant' }), screenHeight - height + 60);
+      assert.ok((await marquee.boundingBox()).y < height, 'Marquee must appear when scrolling past the first screen');
+      console.log(`PASS first screen on ${screenWidth}×${screenHeight} display with ${width}×${height} browser viewport`);
+    } finally {
+      await page.close();
+    }
+  }
+}
+
 (async () => {
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
+    await checkShortBrowserViewport(browser);
     await checkMobileToolbar(browser);
     const page = await browser.newPage();
     const errors = [];
