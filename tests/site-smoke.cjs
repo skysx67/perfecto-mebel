@@ -23,19 +23,34 @@ async function checkMenuCenter(page) {
       await route.fulfill({ json: { ok: true }, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type' } });
     });
 
-    for (const width of [320, 375, 390, 768, 1024, 1101, 1280, 1440]) {
-      await page.setViewportSize({ width, height: 900 });
+    for (const [width, height] of [[320, 568], [375, 667], [390, 844], [667, 375], [768, 1024], [1024, 768], [1101, 720], [1280, 720], [1440, 900], [1920, 1080]]) {
+      await page.setViewportSize({ width, height });
       await page.goto(base + '/index.html');
       assert.match(await page.locator('.hero h1').innerText(), /Мебель на заказ/i);
-      assert.equal(await page.locator('#works').count(), 0);
-      assert.equal(await page.locator('.cat-photo img[src="images/work-01.jpg"]').count(), 1);
+      assert.equal(await page.locator('#catalog, .hero-card').count(), 0);
+      assert.equal(await page.locator('#works h2').innerText(), 'Наши работы');
+      assert.equal(await page.locator('#workGrid img[src="images/work-01.jpg"]').count(), 1);
       assert.equal(await page.locator('img[src="images/kitchen.jpg"]').count(), 0);
+      await page.locator('.site-header.brand-motion').waitFor();
+      await page.evaluate(() => document.fonts.ready);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      const marquee = await page.locator('.marquee').boundingBox();
+      assert.ok(marquee.y >= height - 1, 'Marquee peeks into the hero');
+      const logo = await page.locator('.site-header .logo').boundingBox();
+      const title = await page.locator('.hero h1').boundingBox();
+      assert.ok(Math.abs(logo.x + logo.width / 2 - width / 2) < 1, 'Hero logo must be centered');
+      assert.ok(logo.y + logo.height < title.y, 'Hero logo must be above the title');
+      await page.evaluate(() => window.scrollTo({ top: 80, behavior: 'instant' }));
+      await page.waitForFunction(initialWidth => document.querySelector('.site-header .logo').getBoundingClientRect().width < initialWidth - 1, logo.width);
+      const movingLogo = await page.locator('.site-header .logo').boundingBox();
+      assert.ok(movingLogo.y < logo.y, 'Logo must move up as the page scrolls');
+      await page.evaluate(() => window.scrollTo({ top: 340, behavior: 'instant' }));
+      await page.waitForFunction(() => !document.querySelector('.header-brand-slot .logo').style.transform);
+      const docked = await page.locator('.site-header .logo').boundingBox();
       const mobile = width <= 1100;
       assert.equal(await page.locator('.menu-toggle').isVisible(), mobile);
       if (mobile) {
-        const logo = await page.locator('.site-header .logo').boundingBox();
-        assert.ok(Math.abs(logo.x + logo.width / 2 - width / 2) < 1, 'Mobile logo must be centered');
+        assert.ok(Math.abs(docked.x + docked.width / 2 - width / 2) < 1, 'Mobile header logo must be centered');
         await page.locator('.menu-toggle').click();
         assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'true');
         assert.equal(await page.locator('#site-nav a').first().isVisible(), true);
@@ -43,28 +58,27 @@ async function checkMenuCenter(page) {
         assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false');
         assert.equal(await page.locator('.menu-toggle').evaluate(e => e === document.activeElement), true);
         await page.locator('.menu-toggle').click();
-        await page.locator('#site-nav > a[href="#catalog"]').click();
+        await page.locator('#site-nav > a[href="#works"]').click();
         assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false');
       } else {
+        assert.ok(docked.x < width / 4, 'Desktop logo must dock on the left');
         await checkMenuCenter(page);
-        const items = await page.locator('.site-header .hrow > .logo, .site-header nav, .site-header .header-actions').evaluateAll(elements => elements.map(e => {
+        const items = await page.locator('.site-header .header-brand-slot, .site-header nav, .site-header .header-actions').evaluateAll(elements => elements.map(e => {
           const r = e.getBoundingClientRect(); return { left: r.left, right: r.right, scroll: e.scrollWidth, width: e.clientWidth };
         }));
         for (let i = 1; i < items.length; i++) assert.ok(items[i].left >= items[i - 1].right, 'Header items overlap');
         for (const item of items) assert.ok(item.scroll <= item.width + 1, 'Header content is clipped');
       }
-      await page.locator('.cat .go').first().click();
-      await page.waitForURL(url => url.pathname.endsWith('/raboty.html') && url.hash === '#kitchen');
-      assert.equal(await page.locator('#category-title').innerText(), 'Кухни');
-      assert.equal(await page.locator('.card:visible').count(), 3);
-      assert.equal(await page.locator('.cta .btn-lime').innerText(), 'Записаться на встречу');
-      if (!mobile) await checkMenuCenter(page);
-      console.log('PASS home → kitchens, width ' + width);
+      const works = page.locator('[data-f="kitchen"]');
+      await works.click();
+      assert.equal(await page.locator('.work-photo:visible').count(), 3);
+      assert.equal(await works.getAttribute('aria-pressed'), 'true');
+      console.log(`PASS hero, header, and works at ${width}×${height}`);
     }
 
     for (const category of ['kitchen', 'wardrobe', 'dressing', 'hallway', 'kids', 'bath', 'other']) {
-      await page.goto(base + '/raboty.html#' + category);
-      const cards = page.locator('.card:visible');
+      await page.locator(`[data-f="${category}"]`).click();
+      const cards = page.locator('.work-photo:visible');
       assert.ok(await cards.count() > 0);
       assert.ok((await cards.evaluateAll(elements => elements.map(e => e.dataset.cat))).every(value => value === category));
       assert.ok(await cards.evaluateAll(elements => elements.every(e => e.querySelector('img').getAttribute('src') !== 'images/kitchen.jpg')));
@@ -77,14 +91,14 @@ async function checkMenuCenter(page) {
       assert.equal(await cards.first().locator('button').evaluate(e => e === document.activeElement), true);
       console.log('PASS category + keyboard photo viewer: ' + category);
     }
-    await page.locator('[data-f="kitchen"]').click();
-    await page.waitForURL(url => url.pathname.endsWith('/raboty.html') && url.hash === '#kitchen');
-    await page.locator('[data-f="wardrobe"]').click();
-    await page.waitForURL(url => url.pathname.endsWith('/raboty.html') && url.hash === '#wardrobe');
-    await page.goBack();
-    assert.equal(await page.locator('#category-title').innerText(), 'Кухни');
-    await page.goto(base + '/raboty.html#unknown');
-    assert.equal(await page.locator('.card:visible').count(), 17);
+    await page.locator('[data-f="all"]').click();
+    assert.equal(await page.locator('.work-photo:visible').count(), 17);
+    await page.goto(base + '/raboty.html#kitchen');
+    await page.waitForURL(url => url.searchParams.get('work') === 'kitchen' && url.hash === '#works');
+    assert.equal(await page.locator('[data-f="kitchen"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('.work-photo:visible').count(), 3);
+    await page.goto(base + '/index.html?work=unknown#works');
+    assert.equal(await page.locator('.work-photo:visible').count(), 17);
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(base + '/index.html#contacts');
@@ -99,7 +113,7 @@ async function checkMenuCenter(page) {
     assert.equal(lead['Источник'], 'запись на встречу в студии');
     assert.match(await page.locator('main').innerText(), /время встречи в студии/);
     assert.deepEqual(errors, []);
-    console.log('PASS history, invalid category, required consent, meeting form (mocked), no JavaScript errors');
+    console.log('PASS legacy links, invalid category, required consent, meeting form (mocked), no JavaScript errors');
   } finally {
     await browser.close();
   }
