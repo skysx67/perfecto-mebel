@@ -35,10 +35,10 @@ function api(method, urlPath, body) {
         let json = null;
         try { json = data ? JSON.parse(data) : {}; } catch (e) { /* не JSON — вернём как текст */ }
         if (res.statusCode >= 200 && res.statusCode < 300) resolve(json !== null ? json : data);
-        else reject(new Error('MAX ' + res.statusCode + ': ' + data));
+        else reject(Object.assign(new Error('MAX HTTP ' + res.statusCode), { code: 'HTTP_' + res.statusCode }));
       });
     });
-    req.on('timeout', () => req.destroy(new Error('MAX API timeout')));
+    req.on('timeout', () => req.destroy(Object.assign(new Error('MAX API timeout'), { code: 'TIMEOUT' })));
     req.on('error', reject);
     if (payload) req.write(payload);
     req.end();

@@ -11,17 +11,22 @@ Description=Perfecto — приём заявок с сайта (SQLite + уве�
 Documentation=https://github.com/skysx67/perfecto-mebel
 After=network-online.target
 Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
 
 [Service]
 Type=simple
 User=perfecto
 Group=perfecto
 WorkingDirectory=/opt/perfecto/backend
+Environment=NODE_TLS_REJECT_UNAUTHORIZED=1
 ExecStart=/usr/bin/node --env-file=/opt/perfecto/backend/.env /opt/perfecto/backend/server.js
+ExecStopPost=-/usr/bin/node --env-file=/opt/perfecto/backend/.env /opt/perfecto/backend/alerts.js
 
 # перезапуск при любом падении — бот должен работать всегда
 Restart=always
 RestartSec=5
+TimeoutStopSec=15
 
 # логи в journald
 StandardOutput=journal

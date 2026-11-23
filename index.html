@@ -97,22 +97,7 @@
   ]
 }
 </script>
-<!-- Yandex.Metrika counter — не загружается, если посетитель отказался от cookie -->
-<script type="text/javascript">
-(function(){
-   var declined = false;
-   try { declined = localStorage.getItem('perfecto_cookie') === 'no'; } catch(e){}
-   if (declined) return;
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();
-   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-   ym(110888206, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
-})();
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/110888206" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+<script src="site-metrika.js?v=20261123" defer></script>
 <style>
 :root{
   --ink:#2B2A29;          /* точный тёмный цвет логотипа */
@@ -516,6 +501,12 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
   .hero .chips{gap:8px;margin-top:16px}
   .hero .chip{padding:7px 10px}
 }
+/* Состояния формы записи. */
+.cform .btn:disabled{opacity:.62;cursor:default;transform:none}
+.cform .agree a,.cform .lead-policy,.cform .lead-error a{text-decoration:underline;text-underline-offset:3px}
+.cform .lead-policy{font-size:.79rem;color:var(--tx-mut-l)}
+.cform .lead-error{padding:12px 14px;border-radius:12px;background:#3d2c2d;color:#ffdddd;font-size:.9rem}
+.cform .lead-error a{color:#fff;font-weight:800;white-space:nowrap}
 </style>
 <link rel="stylesheet" href="site-header.css?v=20261120">
 <script src="site-header.js?v=20261120" defer></script>
@@ -657,7 +648,6 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
     <div class="bento">
 
       <article class="bt bt-lg">
-        <div class="bt-media"><img src="images/production-1.jpg" alt="Производство мебели на заказ в Тюмени — цех «Перфекто»" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"></div>
         <div class="bt-in">
           <h3>Производство<br>в Тюмени</h3>
           <p>Мебель изготавливается здесь, в городе — поэтому сроки и качество под контролем. Цена и срок зафиксированы в договоре: без «мы не учли» и доплат в процессе.</p>
@@ -665,7 +655,6 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
       </article>
 
       <article class="bt">
-        <div class="bt-media"><img src="images/team.jpg" alt="Мастера мебельного производства «Перфекто» с опытом более 10 лет" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"></div>
         <div class="bt-in">
           <h3>Мастера с опытом<br>от 10 лет</h3>
           <p>Дизайнер подберёт решение под ваш бюджет, технолог проверит безопасность конструкции.</p>
@@ -681,7 +670,6 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
       </article>
 
       <article class="bt">
-        <div class="bt-media"><img src="images/step-5.jpg" alt="Сборка и установка мебели на заказ у клиента" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"></div>
         <div class="bt-in">
           <h3>Соберём и уберём<br>за собой</h3>
           <p>Бригада приезжает вовремя, работает аккуратно и оставляет чистоту.</p>
@@ -689,7 +677,6 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
       </article>
 
       <article class="bt">
-        <div class="bt-media"><img src="images/production-2.jpg" alt="Материалы и фурнитура для корпусной мебели на заказ" loading="lazy" onerror="this.parentNode.classList.add('is-empty')"></div>
         <div class="bt-in">
           <h3>Материалы, которые<br>служат годами</h3>
           <p>Современное оборудование и проверенная фурнитура — мебель не расшатается через год.</p>
@@ -784,27 +771,22 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
     <h2>От заявки до готовой мебели — 5 шагов</h2>
     <div class="steps">
       <div class="step reveal">
-        <figure class="ph r-4x3"><img src="images/step-1.jpg" alt="Консультация по заказу мебели" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото — скоро"></figure>
         <h3>Встречаемся в студии</h3>
         <p>Запишитесь по телефону или через форму. Обсудим задачу, материалы, фурнитуру и предварительный эскиз.</p>
       </div>
       <div class="step reveal" data-d="1">
-        <figure class="ph r-4x3"><img src="images/step-2.jpg" alt="Замер помещения перед изготовлением мебели" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото замера — скоро"></figure>
         <h3>Согласовываем замер</h3>
         <p>После встречи, когда вы готовы продолжить работу над заказом, договоримся о бесплатном выезде специалиста.</p>
       </div>
       <div class="step reveal" data-d="2">
-        <figure class="ph r-4x3"><img src="images/step-3.jpg" alt="3D-проект будущей мебели" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Скрин 3D-проекта — скоро"></figure>
         <h3>Уточняем проект</h3>
         <p>По результатам замера дорабатываем дизайн и комплектацию, согласовываем итоговый вариант и стоимость.</p>
       </div>
       <div class="step reveal" data-d="3">
-        <figure class="ph r-4x3"><img src="images/step-4.jpg" alt="Производство мебели в Тюмени" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото цеха — скоро"></figure>
         <h3>Производство</h3>
         <p>Изготавливаем в Тюмени. Цена и срок — в договоре.</p>
       </div>
       <div class="step reveal" data-d="4">
-        <figure class="ph r-4x3"><img src="images/step-5.jpg" alt="Сборка и установка мебели у клиента" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото монтажа — скоро"></figure>
         <h3>Доставка и монтаж</h3>
         <p>Привезём, соберём, установим и уберём за собой.</p>
       </div>
@@ -836,7 +818,7 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
       </div>
       <div class="rev reveal" data-d="1">
         <div class="stars">★★★★★</div>
-        <p>«С 2018 года работаем с этими ребятами: заказывали мебель в две квартиры и дом. Ни одного нарекания, всегда прислушиваются к пожеланиям».</p>
+        <p>«Ни одного нарекания, всегда прислушиваются к пожеланиям».</p>
         <div class="who"><div class="ava">И</div><div><b>Ирина Клименко</b><small>отзыв с 2ГИС</small></div></div>
       </div>
       <div class="rev reveal" data-d="2">
@@ -941,17 +923,19 @@ body.ck-open .stickybar.show{transform:translateY(200%);visibility:hidden}
           <a href="https://www.instagram.com/studio_perfecto_72/" target="_blank" rel="noopener">📷 Instagram*</a>
           <a href="https://2gis.ru/tyumen/firm/70000001037188622" target="_blank" rel="noopener">🗺️ 2ГИС</a>
         </div>
-        <figure class="ph r-16x9 contact-photo"><img src="images/office.jpg" alt="Офис студии мебельных решений «Перфекто» в Тюмени на Широтной, 209" loading="lazy" onerror="this.parentNode.classList.add('is-empty')" data-empty="Фото офиса — скоро"><span class="ph-cap">Широтная, 209 · 2 этаж</span></figure>
         <p style="font-size:.68rem;color:rgba(255,255,255,.35);margin-top:14px">* Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой в РФ</p>
       </div>
-      <form class="cform" id="leadForm">
+      <form class="cform" id="leadForm" method="post" action="/lead" data-consent-version="2026-11-23" aria-describedby="lead-help">
         <h3>Записаться на встречу</h3>
-        <p>Оставьте телефон — перезвоним и согласуем время встречи в студии.</p>
+        <p id="lead-help">Оставьте телефон. Перезвоним и согласуем время встречи в студии.</p>
         <div class="qform">
-          <input class="inp" type="text" name="name" aria-label="Ваше имя" placeholder="Ваше имя" autocomplete="name">
-          <input class="inp" type="tel" name="phone" aria-label="Ваш телефон" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>
-          <label class="agree"><input type="checkbox" required> Даю согласие ИП Плаксеновой О. В. на обработку моих персональных данных (имя, телефон, e-mail) для связи по заявке и ознакомлен(а) с <a href="politika.html" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:inherit;text-decoration:underline">Политикой обработки персональных данных</a></label>
-          <button class="btn btn-blue" type="submit">Записаться на встречу</button>
+          <input class="inp" type="text" name="name" aria-label="Ваше имя (необязательно)" placeholder="Ваше имя" autocomplete="name" maxlength="100">
+          <input class="inp" type="tel" name="phone" aria-label="Ваш телефон" placeholder="+7 (___) ___-__-__" autocomplete="tel" maxlength="26" required>
+          <label class="agree"><input type="checkbox" name="consent" required><span>Даю <a href="soglasie.html" target="_blank" rel="noopener">согласие на обработку имени и телефона</a> для связи по заявке.</span></label>
+          <a class="lead-policy" href="politika.html" target="_blank" rel="noopener">Политика обработки персональных данных</a>
+          <button class="btn btn-blue" type="submit" disabled>Записаться на встречу</button>
+          <p id="lead-error" class="lead-error" role="alert" hidden><span></span> <a href="tel:+79044952700" hidden>+7 904 495-27-00</a></p>
+          <noscript><p>Чтобы записаться, позвоните <a href="tel:+79044952700">+7 904 495-27-00</a>.</p></noscript>
         </div>
       </form>
     </div>
@@ -1077,36 +1061,71 @@ function countUp(box){
   });
 }
 
-// Адрес бэкенда определяется сам — править вручную не нужно:
-//   localhost      → локальный бэкенд (проверка на своём ПК)
-//   github.io      → пусто (тестовый стенд, бэкенда там нет — заявки не уходят)
-//   свой домен     → '/lead' на том же домене (nginx проксирует на бэкенд)
-var LEAD_ENDPOINT = '/lead';
-if(location.hostname==='localhost'||location.hostname==='127.0.0.1') LEAD_ENDPOINT='http://localhost:8787/lead';
-else if(location.hostname.indexOf('github.io')!==-1||location.protocol==='file:') LEAD_ENDPOINT='';
-function sendLead(data){
-  console.log('LEAD:', data);
-  if(!LEAD_ENDPOINT) return;
-  // fire-and-forget: UX не зависит от ответа сервера
-  try{
-    fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),keepalive:true}).catch(function(){});
-  }catch(e){}
-}
+// Запись подтверждается только после успешного ответа о сохранении заявки.
+(function () {
+  const form = document.getElementById('leadForm');
+  const submit = form.querySelector('[type="submit"]');
+  const phone = form.elements.phone;
+  const error = document.getElementById('lead-error');
+  const title = submit.textContent;
+  const demo = location.hostname.endsWith('.github.io') || !window.isSecureContext;
+  const local = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const endpoint = local ? `http://${location.hostname}:8787/lead` : '/lead';
+  let lastAttempt;
 
-// после отправки заявки уводим на страницу «Спасибо» (это конверсия для Метрики/Директа)
-function goThanks(){
-  try{ sessionStorage.setItem('perfecto_lead','1'); }catch(e){}
-  location.href = 'spasibo.html';
-}
+  function showError(message, withPhone = false) {
+    error.querySelector('span').textContent = message;
+    error.querySelector('a').hidden = !withPhone;
+    error.hidden = false;
+  }
 
-document.getElementById('leadForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  sendLead({'Имя': this.name.value, 'Телефон': this.phone.value, 'Источник': 'запись на встречу в студии'});
-  goThanks();
-});
+  if (demo) {
+    showError('Запись через форму пока недоступна. Позвоните в студию:', true);
+    return;
+  }
+
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (submit.disabled) return;
+    error.hidden = true;
+    phone.removeAttribute('aria-invalid');
+    const name = form.elements.name.value.trim();
+    const phoneNumber = phone.value.trim();
+    if (!lastAttempt || lastAttempt.name !== name || lastAttempt.phone !== phoneNumber) {
+      lastAttempt = { name, phone: phoneNumber, requestId: crypto.randomUUID() };
+    }
+    submit.disabled = true;
+    submit.textContent = 'Отправляем…';
+    form.setAttribute('aria-busy', 'true');
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...lastAttempt, consent: form.elements.consent.checked, consentVersion: form.dataset.consentVersion }),
+        signal: AbortSignal.timeout(12000),
+      });
+      const result = await response.json();
+      if (response.status === 422 && result.code === 'bad_phone') {
+        showError('Проверьте номер телефона. Например: +7 900 123-45-67.');
+        phone.setAttribute('aria-invalid', 'true');
+        phone.focus();
+        return;
+      }
+      if (!response.ok || result.ok !== true) throw new Error('Заявка не принята');
+      try { sessionStorage.setItem('perfecto_accepted_lead', lastAttempt.requestId); } catch {}
+      location.href = 'spasibo.html';
+    } catch {
+      showError('Не получилось отправить заявку. Пожалуйста, позвоните в студию:', true);
+    } finally {
+      submit.disabled = false;
+      submit.textContent = title;
+      form.removeAttribute('aria-busy');
+    }
+  });
+  submit.disabled = false;
+})();
 
 // cookie-баннер: показываем один раз, пока посетитель не сделал выбор.
-// «Отклонить» → перезагружаем страницу, и Метрика больше не подключается (см. <head>).
+// Аналитика загружается только после согласия.
 (function(){
   var bar = document.getElementById('ckbar'), choice = null;
   try { choice = localStorage.getItem('perfecto_cookie'); } catch(e){}
@@ -1117,7 +1136,7 @@ document.getElementById('leadForm').addEventListener('submit', function(e){
     try{ localStorage.setItem('perfecto_cookie', val); }catch(e){}
     bar.classList.remove('show');
     document.body.classList.remove('ck-open');
-    if(val === 'no') location.reload();
+    if(val === 'yes') window.dispatchEvent(new Event('perfecto:analytics-accepted'));
   }
   document.getElementById('ckOk').addEventListener('click', function(){ decide('yes'); });
   document.getElementById('ckNo').addEventListener('click', function(){ decide('no'); });

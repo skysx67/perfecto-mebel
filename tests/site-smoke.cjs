@@ -80,9 +80,12 @@ async function checkShortBrowserViewport(browser) {
     await page.addInitScript(() => localStorage.setItem('perfecto_cookie', 'no'));
     await page.route('**/mc.yandex.ru/**', route => route.abort());
     let lead;
+    let leadStatus = 201;
     await page.route('**/lead', async route => {
       if (route.request().method() === 'POST') lead = route.request().postDataJSON();
-      await route.fulfill({ json: { ok: true }, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type' } });
+      await route.fulfill({ status: route.request().method() === 'POST' ? leadStatus : 200,
+        json: { ok: leadStatus === 201, code: leadStatus === 422 ? 'bad_phone' : undefined },
+        headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type' } });
     });
 
     for (const [width, height] of [[320, 568], [375, 667], [390, 844], [667, 375], [768, 1024], [1024, 768], [1101, 720], [1280, 720], [1440, 900], [1920, 1080]]) {
@@ -166,16 +169,66 @@ async function checkShortBrowserViewport(browser) {
     await page.goto(base + '/index.html#contacts');
     assert.equal(await page.locator('#leadForm').evaluate(form => form.checkValidity()), false);
     await page.locator('[name="name"]').fill('Проверка сайта');
-    await page.locator('[name="phone"]').fill('+7 900 000-00-00');
     await page.locator('#leadForm [type="checkbox"]').check();
+    leadStatus = 422;
+    await page.locator('[name="phone"]').fill('abc');
+    await page.locator('#leadForm [type="submit"]').click();
+    await page.locator('#lead-error:visible').waitFor();
+    assert.equal(await page.locator('[name="phone"]').getAttribute('aria-invalid'), 'true');
+    assert.equal(await page.locator('#lead-error a').isVisible(), false);
+
+    leadStatus = 503;
+    await page.locator('[name="phone"]').fill('+7 900 000-00-00');
+    await page.locator('#leadForm [type="submit"]').click();
+    await page.locator('#lead-error a:visible').waitFor();
+    assert.equal(await page.locator('#lead-error a').getAttribute('href'), 'tel:+79044952700');
+    assert.equal(new URL(page.url()).hash, '#contacts');
+    assert.equal(await page.evaluate(() => sessionStorage.getItem('perfecto_accepted_lead')), null);
+    const retryId = lead.requestId;
+
+    leadStatus = 201;
     const request = page.waitForRequest(r => r.url().endsWith('/lead') && r.method() === 'POST');
     await page.locator('#leadForm [type="submit"]').click();
     await request;
     await page.waitForURL('**/spasibo.html');
-    assert.equal(lead['Источник'], 'запись на встречу в студии');
-    assert.match(await page.locator('main').innerText(), /время встречи в студии/);
+    assert.equal(lead.requestId, retryId);
+    assert.equal(lead.consent, true);
+    assert.equal(lead.consentVersion, '2026-11-23');
+    await page.locator('#lead-confirmation:visible').waitFor();
     assert.deepEqual(errors, []);
-    console.log('PASS legacy links, invalid category, required consent, meeting form (mocked), no JavaScript errors');
+    console.log('PASS legacy links, invalid category, required consent, phone validation, error fallback, successful retry');
+
+    const clean = await browser.newPage();
+    let trackerRequests = 0;
+    await clean.route('**/mc.yandex.ru/**', route => { trackerRequests++; return route.abort(); });
+    await clean.goto(base + '/');
+    await clean.locator('#ckbar:visible').waitFor();
+    assert.equal(trackerRequests, 0);
+    await clean.locator('#ckNo').click();
+    await clean.reload();
+    assert.equal(trackerRequests, 0);
+    await clean.evaluate(() => localStorage.removeItem('perfecto_cookie'));
+    await clean.reload();
+    const tracker = clean.waitForRequest('**/mc.yandex.ru/metrika/tag.js');
+    await clean.locator('#ckOk').click();
+    await tracker;
+    assert.equal(await clean.evaluate(() => window.ym.a.some(event => event[1] === 'reachGoal')), false);
+    await clean.goto(base + '/spasibo.html');
+    assert.equal(await clean.locator('#lead-confirmation').isVisible(), false);
+    assert.equal(await clean.evaluate(() => window.ym.a.some(event => event[1] === 'reachGoal')), false);
+    await clean.route('**/lead', route => route.fulfill({ status: 200, json: { ok: true },
+      headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type' } }));
+    await clean.goto(base + '/index.html#contacts');
+    await clean.locator('[name="phone"]').fill('+7 900 000-00-00');
+    await clean.locator('#leadForm [type="checkbox"]').check();
+    await clean.locator('#leadForm [type="submit"]').click();
+    await clean.waitForURL('**/spasibo.html');
+    await clean.locator('#lead-confirmation:visible').waitFor();
+    assert.equal(await clean.evaluate(() => window.ym.a.filter(event => event[1] === 'reachGoal' && event[2] === 'zayavka').length), 1);
+    await clean.reload();
+    assert.equal(await clean.evaluate(() => window.ym.a.some(event => event[1] === 'reachGoal')), false);
+    await clean.close();
+    console.log('PASS analytics after opt-in, conversion once after accepted lead only');
   } finally {
     await browser.close();
   }

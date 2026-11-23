@@ -106,7 +106,7 @@ chmod 600 "$ENV_FILE"
 say "Публикую сайт"
 mkdir -p "$WEB_DIR"
 rsync -a --delete \
-  --exclude='.*' --exclude='backend' --exclude='deploy' \
+  --exclude='.*' --exclude='backend' --exclude='deploy' --exclude='tests' \
   --exclude='*.md' --exclude='og-card.html' \
   "$APP_DIR/" "$WEB_DIR/"
 chown -R www-data:www-data "$WEB_DIR"
@@ -128,11 +128,18 @@ fi
 # ── 9. nginx ─────────────────────────────────────────────────────────────────
 say "Настраиваю nginx"
 SRV_NAME="${DOMAIN:-_}"
-sed "s/__DOMAIN__/$SRV_NAME/" "$APP_DIR/deploy/nginx-perfecto.conf" \
-  > /etc/nginx/sites-available/perfecto
+if [ ! -f /etc/nginx/sites-available/perfecto ]; then
+  sed "s/__DOMAIN__/$SRV_NAME/" "$APP_DIR/deploy/nginx-perfecto.conf" \
+    > /etc/nginx/sites-available/perfecto
+elif [ -n "$DOMAIN" ] && grep -Eq '^[[:space:]]*server_name _;' /etc/nginx/sites-available/perfecto \
+  && ! grep -q 'ssl_certificate' /etc/nginx/sites-available/perfecto; then
+  sed -i "s/server_name _;/server_name $DOMAIN;/" /etc/nginx/sites-available/perfecto
+fi
 ln -sf /etc/nginx/sites-available/perfecto /etc/nginx/sites-enabled/perfecto
 rm -f /etc/nginx/sites-enabled/default
-nginx -t >/dev/null 2>&1 && systemctl reload nginx && ok "nginx настроен и перезагружен"
+nginx -t
+systemctl reload nginx
+ok "nginx настроен и перезагружен"
 
 # ── 10. Файрвол ──────────────────────────────────────────────────────────────
 say "Файрвол"

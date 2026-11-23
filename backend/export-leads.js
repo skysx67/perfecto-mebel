@@ -12,9 +12,10 @@ const COLS = [
 ];
 
 function cell(v) {
-  const s = (v === null || v === undefined) ? '' : String(v);
+  const value = (v === null || v === undefined) ? '' : String(v);
+  const s = /^[\s]*[=+@-]/.test(value) ? "'" + value : value;
   // экранируем по правилам CSV
-  return /[";\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  return /[";\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
 }
 
 const rows = listLeads(100000).reverse(); // по возрастанию id

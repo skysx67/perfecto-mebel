@@ -53,7 +53,7 @@ nano /opt/perfecto/backend/.env
 ```
 
 Заполнить две строки:
-- `MAX_TOKEN=` — токен бота из **@MasterBot** в MAX
+- `MAX_TOKEN=` — токен бота из **MAX для бизнеса**
 - `MANAGER_USER_ID=` — ID того, кому падают заявки
 
 Чтобы узнать ID: менеджер открывает бота в MAX и жмёт «Начать», затем на сервере:
@@ -99,7 +99,7 @@ systemctl status perfecto-lead        # → active (running)
 bash /opt/perfecto/deploy/update.sh
 ```
 
-Заявки (`leads.db`) и настройки (`.env`) при обновлении не трогаются.
+Заявки, настройки и конфигурация Nginx с HTTPS остаются на месте. Изменения конфигурации Nginx применяйте отдельно после `nginx -t`.
 
 ## Полезные команды
 
@@ -123,11 +123,14 @@ bash /opt/perfecto/deploy/update.sh
 
 ## Резервная копия заявок
 
-База — один файл, копируется как обычный файл:
+Для работающей SQLite используйте её API резервного копирования. Запускайте из `backend` на сервере. Путь загрузки задаётся через `DB_FILE`, по умолчанию — `leads.db`.
 
 ```bash
-scp root@ВАШ_IP:/opt/perfecto/backend/leads.db ./leads-backup.db
+umask 077
+node --env-file=.env -e 'const {DatabaseSync,backup}=require("node:sqlite"); backup(new DatabaseSync(process.env.DB_FILE || "leads.db",{readOnly:true}),process.argv[1]).catch(e=>{console.error(e.message);process.exitCode=1;});' "leads-backup-$(date +%F-%H%M).db"
 ```
+
+Храните копию отдельно от сервера, с ограниченным доступом. Проверьте восстановление в отдельный файл и `PRAGMA integrity_check` перед использованием копии.
 
 ## Если что-то не работает
 
